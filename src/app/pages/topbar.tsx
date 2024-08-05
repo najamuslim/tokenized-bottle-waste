@@ -1,6 +1,6 @@
-"use client"
 
-import React, { Provider, useState } from "react";
+
+import React, { useState } from "react";
 import { ethers } from "ethers";
 import { Button, Modal } from "flowbite-react";
 import Image from "next/image";
@@ -10,7 +10,6 @@ import Metamask_icon from "../assets/svg/metamask.svg";
 import Coinbase_icon from "../assets/svg/CoinbaseWallet.svg";
 import ConnectWallet_icon from "../assets/svg/Wallet_Connect.svg";
 import BraveWallet_icon from "../assets/svg/Brave_Wallet.svg";
-import { BlockTag } from "web3";
 
 //Properties
 const Ethereum = (window as any).ethereum;
@@ -21,16 +20,16 @@ const Top_Bar = () => {
     const [openModal, setOpenModal] = useState(false);
 
     //Properties
-    const [errorMessage, setErrorMessage] = useState<string | null>(null);
-    const [defaultAccount, setDefaultAccount] = useState<string | null>(null);
-    const [userBalance, setUserbalance] = useState<string | null>(null);
+    const [errorMessage, setErrorMessage] = useState("");
+    const [defaultAccount, setDefaultAccount] = useState("");
+    const [userBalance, setUserbalance] = useState("");
 
 
     //Connect Wallet Handler  ( METAMASK WALLET)
     const connectWalletHandler = async () => {
         if (Ethereum) {
           provider.send("eth_requestAccounts", []).then( async () => {
-            await accountChangeHandler(provider.getSigner());
+            await accountChangeHandler();
           })
         } else {
           setErrorMessage("Please Install Metamask!");
@@ -38,20 +37,15 @@ const Top_Bar = () => {
     }
 
 
-    const accountChangeHandler = async (newAccount : ethers.Signer) => {
-      const address = await newAccount.getAddress();
+    const accountChangeHandler = async () => {
+      const Account_ = await provider.getSigner(); 
+      const address = await Account_.getAddress();
       setDefaultAccount(address);
-      const balance = await newAccount.getBalance();
+      const balance = await Account_.getBalance("latest");
       setUserbalance(ethers.utils.formatEther(balance));
-      await getuserBalance(address);
+      //Close Modal
+      setOpenModal(false);
     }
-
-    const getuserBalance = async (address: string | Promise<string>) => {
-      await provider.getBalance(address, "Latest")
-    }
-
-
-
 
   return (
     <>
@@ -64,14 +58,13 @@ const Top_Bar = () => {
             className="text-gray-900 bg-white hover:bg-gray-100 border border-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:focus:ring-gray-600 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:bg-gray-700"
           >
             <Image src={connect_icon} alt="Connect Wallet icon" />
-            <span className="ml-2">
+            <span className="mx-1">
                     {defaultAccount? "Connected" : "Connect"}
             </span>
           </Button>
           <div id="Identity" className="flex justify-center">
             <div className="flex items-center text-white">
               <div> Address: {defaultAccount}</div>
-              <br/>
               <div> Wallet Amount: {userBalance}</div>
             </div>
           </div>
