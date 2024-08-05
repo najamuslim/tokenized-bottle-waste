@@ -1,0 +1,46 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --foreground-rgb: 0, 0, 0;
+  --background-start-rgb: 214, 219, 220;
+  --background-end-rgb: 255, 255, 255;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --foreground-rgb: 255, 255, 255;
+    --background-start-rgb: 0, 0, 0;
+    --background-end-rgb: 0, 0, 0;
+  }
+}
+
+body {
+  background-color: #003566;
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+
+/* TOP BAR
+================================================== */
+.popular{
+  display: inline-flex;
+  align-items: center;
+  justify-content: right;
+  font-size: 0.75rem;
+  line-height: 1rem;
+  padding: 0.5rem 1.4rem;
+  border-radius:20px;
+  margin-inline-start:center; 
+  font-weight: 500;
+  color: rgb(107 114 128 / 1); 
+  background-color: rgb(229 231 235 / 1);
+}
+#metamask_w:hover{
+  cursor: pointer;
+}
