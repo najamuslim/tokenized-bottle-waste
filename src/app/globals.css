@@ -28,6 +28,13 @@ body {
 
 /* TOP BAR
 ================================================== */
+#topBar{
+  display: flex;
+  flex-direction: column;
+  align-items:flex-end;
+  padding: 5%;
+  
+}
 .popular{
   display: inline-flex;
   align-items: center;
@@ -43,4 +50,16 @@ body {
 }
 #metamask_w:hover{
   cursor: pointer;
+}
+#btnConnect{
+  display: flex;
+  background-color: #F5CC00;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+  width: 193px;
+  height: 51.23px;
+  top: 118px;
+  left: 1104px;
+  border-radius: 89.83px;
 }

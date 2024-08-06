@@ -1,4 +1,4 @@
-
+"user client"
 
 import React, { useState } from "react";
 import { ethers } from "ethers";
@@ -36,7 +36,6 @@ const Top_Bar = () => {
         }
     }
 
-
     const accountChangeHandler = async () => {
       const Account_ = await provider.getSigner(); 
       const address = await Account_.getAddress();
@@ -49,21 +48,19 @@ const Top_Bar = () => {
 
   return (
     <>
-      <div id="topbar">
-        <div className="flex justify-between items-center py-4">
-          <Button id="btnConnect"
+      <div id="topBar">
+          <button id="btnConnect"
             onClick={() => setOpenModal(true)}
             type="button"
             data-modal-target="crypto-modal"
-            className="text-gray-900 bg-white hover:bg-gray-100 border border-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:focus:ring-gray-600 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:bg-gray-700"
           >
             <Image src={connect_icon} alt="Connect Wallet icon" />
             <span className="mx-1">
                     {defaultAccount? "Connected" : "Connect"}
             </span>
-          </Button>
-          <div id="Identity" className="flex justify-center">
-            <div className="flex items-center text-white">
+          </button>
+          <div className="flex justify-center">
+            <div className="grid items-center text-white">
               <div> Address: {defaultAccount}</div>
               <div> Wallet Amount: {userBalance}</div>
             </div>
@@ -151,7 +148,6 @@ const Top_Bar = () => {
             </Modal.Footer>
 
           </Modal>
-        </div>
       </div>
     </>
   );
