@@ -25,12 +25,31 @@ body {
     text-wrap: balance;
   }
 }
+/* NAVBAR
+================================================== */
 .Navbar{
   display: flex;
   flex-direction: row;
   margin: 55px 0px 55px 0px;
   justify-content: space-around;
   align-items: center;
+}
+.h-nav{
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  justify-items: center;
+  flex-direction: row-reverse;
+  flex-wrap: wrap;
+  align-content: center;
+}
+.l-nav{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  column-gap:430px;
+  width: auto;
+  margin-bottom: 30px;
 }
 
 .logo-brand{
@@ -102,7 +121,7 @@ body {
   align-items: center;
   width: auto;
   height: fit-content;
-  padding: 10px 24px 10px 24px;
+  padding: 10px 26px 10px 26px;
   border: none;
   outline: none;
 }
@@ -117,4 +136,51 @@ body {
   color: #F5CC00!important;
   outline: 1px whitesmoke;
 }
+
+/* SIDE BAR
+=====================================*/
+.ct-sidebar{
+  z-index: 1;
+  position: absolute;
+  margin-top: 80%;
+}
+
+
+
+
+
+
+/* Media - Screen
+=====================================*/
+@media only screen and (max-width: 1200px)  {
+  .l-nav{
+    column-gap: 150px!important;
+  }
+  #btnConnect{
+    padding: 10px 24px 10px 24px;
+    font-size: small;
+  }
+}
+
+@media only screen and (max-width: 768px)  {
+  .l-nav{
+    column-gap: 120px!important;
+  }
+  #btnConnect{
+    padding: 10px 22px 10px 22px;
+    font-size: small;
+  }
+}
+
+@media only screen and (max-width: 500px) {
+  .l-nav{
+    column-gap: 43px!important;
+  }
+  #btnConnect{
+    padding: 8px 12px 8px 12px;
+    font-size: 9px;
+  }
+
+}
+
 

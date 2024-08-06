@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from "react";
 import { ethers } from "ethers";
 import type { CustomFlowbiteTheme } from "flowbite-react";
-import { Modal, Navbar, Button } from "flowbite-react";
+import { Modal, Sidebar } from "flowbite-react";
 import Image from "next/image";
 import connect_icon from "../assets/svg/connect_.svg";
 import Q1_icon from "../assets/svg/Q_1.svg";
@@ -15,6 +15,7 @@ import BraveWallet_icon from "../assets/svg/Brave_Wallet.svg";
 import { motion } from "framer-motion";
 import Toggle_On from "../assets/svg/toggle-on.svg";
 import Toggle_Off from "../assets/svg/toggle-off.svg";
+import { HiArrowSmRight, HiChartPie, HiInbox, HiShoppingBag, HiTable, HiUser, HiViewBoards } from "react-icons/hi";
 
 //Properties
 const Ethereum = (window as any).ethereum;
@@ -103,51 +104,73 @@ const Top_Bar = () => {
     return (
       <>
         <nav className="Navbar">
-          {/* Mobile menu button */}
-          <button className="md:hidden w-14 h-auto" onClick={toggleMobileMenu}>
-            <Switch isOn={isOn} onClick={() => setIsOn(!isOn)} />
-          </button>
-          {/* Logo */}
-          <a href="/" className="text-xl font-bold text-white">
-            <Image className="logo-brand" src={Logo_brand} alt="logo brand" />
-          </a>
-          {/* Desktop navigation links */}
-          <div className="hidden md:flex space-x-4">
-            <a href="#" className="text-gray-300 hover:text-white">
-              Store
-            </a>
-            <a href="#" className="text-gray-300 hover:text-white">
-              Account
-            </a>
-          </div>
-          <div className="flex md:order-2">
-            <button
-              id="btnConnect"
-              onClick={() => setOpenModal(true)}
-              type="button"
-              data-modal-target="crypto-modal"
-            >
-              <Image
-                className="connect-icon"
-                src={connect_icon}
-                alt="Connect Wallet icon"
-              ></Image>
-              <span>{defaultAccount ? "Connected" : "Connect Wallet"}</span>
-            </button>
-          </div>
-
-          {/* Mobile menu */}
-          <div
-            className={`md:hidden ${
-              isMobileMenuOpen ? "block" : "hidden"
-            } bg-transparent`}>
-            <div className="flex flex-col items-center py-4">
-              <a href="#" className="text-gray-300 hover:text-white py-2">
-                Store
+          <div className="h-nav">
+            <div className="l-nav">
+              {/* Mobile menu button */}
+              <button
+                className="md:hidden w-14 h-auto"
+                onClick={toggleMobileMenu}
+              >
+                <Switch isOn={isOn} onClick={() => setIsOn(!isOn)} />
+              </button>
+              {/* Logo */}
+              <a href="/" className="text-xl font-bold text-white">
+                <Image
+                  className="logo-brand"
+                  src={Logo_brand}
+                  alt="logo brand"
+                />
               </a>
-              <a href="#" className="text-gray-300 hover:text-white py-2">
-                Account
-              </a>
+              {/* Desktop navigation links */}
+              <div className="hidden md:flex space-x-4">
+                <a href="#" className="text-gray-300 hover:text-white">
+                  Store
+                </a>
+                <a href="#" className="text-gray-300 hover:text-white">
+                  Account
+                </a>
+              </div>
+              <div className="flex md:order-2">
+                <button
+                  id="btnConnect"
+                  onClick={() => setOpenModal(true)}
+                  type="button"
+                  data-modal-target="crypto-modal"
+                >
+                  <Image
+                    className="connect-icon"
+                    src={connect_icon}
+                    alt="Connect Wallet icon"
+                  ></Image>
+                  <span>{defaultAccount ? "Connected" : "Connect Wallet"}</span>
+                </button>
+              </div>
+            </div>
+            {/* Mobile menu */}
+            <div className="ct-sidebar">
+              <div
+                className={`md:hidden ${
+                  isMobileMenuOpen ? "block" : "hidden"
+                } bg-transparent`}>
+                <Sidebar aria-label="Default sidebar example">
+                  <Sidebar.Items>
+                    <Sidebar.ItemGroup>
+                      <Sidebar.Item href="#" icon={HiChartPie}>
+                        Dashboard
+                      </Sidebar.Item>
+                      <Sidebar.Item href="#" icon={HiInbox} label="3">
+                        Inbox
+                      </Sidebar.Item>
+                      <Sidebar.Item href="#" icon={HiShoppingBag}>
+                        Store
+                      </Sidebar.Item>
+                      <Sidebar.Item href="#" icon={HiArrowSmRight}>
+                        Profile
+                      </Sidebar.Item>
+                    </Sidebar.ItemGroup>
+                  </Sidebar.Items>
+                </Sidebar>
+              </div>
             </div>
           </div>
         </nav>
