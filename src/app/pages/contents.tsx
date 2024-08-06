@@ -4,9 +4,9 @@ import { Card } from "flowbite-react";
 
 const Content_Area = () => {
   return (
-    <Card href="#" className="max-w-sm">
-        
-    </Card>
+      <>
+      <div className="flex h-12"></div>
+      </>
   );
 }
 

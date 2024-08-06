@@ -25,16 +25,20 @@ body {
     text-wrap: balance;
   }
 }
-
-/* TOP BAR
-================================================== */
-#topBar{
+.Navbar{
   display: flex;
-  flex-direction: column;
-  align-items:flex-end;
-  padding: 5%;
-  
+  flex-direction: row;
+  margin: 55px 0px 55px 0px;
+  justify-content: space-around;
+  align-items: center;
 }
+
+.logo-brand{
+  display: flex;
+  width: 120px;
+  height: auto;
+}
+
 .popular{
   display: inline-flex;
   align-items: center;
@@ -51,15 +55,66 @@ body {
 #metamask_w:hover{
   cursor: pointer;
 }
+
+/* TOGGLE SWITCH MOBILE VIEW
+================================================== */
+.toggleSwitch {
+  background: none;
+  display: flex;
+  cursor: pointer;
+  z-index: 2;
+}
+
+/* CSS for switch when "on"*/
+.toggleSwitch.on {
+  background-color: none;
+  justify-content: flex-end;
+  /* for smooth transition*/
+  transition: 0.5s ease-in-out;
+}
+
+/*CSS for switch when "off"*/
+.toggleSwitch.off {
+  background-color: none;
+  justify-content: flex-start;
+}
+
+.toggleSwitch div {
+  border-radius: 100%;
+}
+
+#btn-tg{
+  display: flex;
+  width: 55px;
+  height: 50%;
+  border-radius: 100%;
+  display: none;
+  outline: none;
+}
+
 #btnConnect{
   display: flex;
+  color: #003566;
+  font-size: 15px;
   background-color: #F5CC00;
+  border-radius: 89px;
   justify-content: center;
   align-items: center;
-  align-content: center;
-  width: 193px;
-  height: 51.23px;
-  top: 118px;
-  left: 1104px;
-  border-radius: 89.83px;
+  width: auto;
+  height: fit-content;
+  padding: 10px 24px 10px 24px;
+  border: none;
+  outline: none;
 }
+#btnConnect:hover{
+ cursor: pointer;
+ background-color: #003566;
+ color: #F5CC00;
+ outline: solid 2px #F5CC00;
+
+}
+#connect-icon{
+  color: #F5CC00!important;
+  outline: 1px whitesmoke;
+}
+
