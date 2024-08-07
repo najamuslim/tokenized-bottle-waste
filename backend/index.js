@@ -82,8 +82,15 @@ app.post("/mint-nft", async (req, res) => {
     const tx = await nftContract.safeMint(userAddress, tokenURI, {
       gasLimit: 1000000,
     });
-    await tx.wait();
-    res.send("NFT minted successfully!");
+    const receipt = await tx.wait();
+
+    const event = receipt.events.find((event) => event.event === "Transfer");
+    const tokenId = event.args.tokenId;
+
+    res.send({
+      message: "NFT minted successfully!",
+      tokenId: tokenId.toString(),
+    });
   } catch (error) {
     res.status(500).send("Error minting NFT: " + error.message);
   }
