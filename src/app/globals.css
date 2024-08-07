@@ -29,8 +29,8 @@ body {
 ================================================== */
 .Navbar{
   display: flex;
-  flex-direction: row;
-  margin: 55px 0px 55px 0px;
+  flex-direction: column;
+  margin: 0px 0px 55px 0px;
   justify-content: space-around;
   align-items: center;
 }
@@ -47,7 +47,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  column-gap:430px;
+  column-gap:340px;
   width: auto;
   margin-bottom: 30px;
 }
@@ -130,20 +130,70 @@ body {
  background-color: #003566;
  color: #F5CC00;
  outline: solid 2px #F5CC00;
-
 }
-#connect-icon{
-  color: #F5CC00!important;
-  outline: 1px whitesmoke;
+#btnConnect img{
+  display: flex;
+  width: 42px;
+  height: auto;
 }
-
+#btnConnect span{
+  text-overflow: ellipsis;
+  /* Required for text-overflow to do anything */
+  white-space: nowrap;
+  overflow: hidden;
+}
 /* SIDE BAR
 =====================================*/
-.ct-sidebar{
-  z-index: 1;
-  position: absolute;
-  margin-top: 80%;
+
+
+
+
+/* MENU
+=====================================*/
+.Menu-nav{
+  display: none;
+  font-size: larger;
 }
+.Menu-nav a{
+  color:  whitesmoke;
+  font-weight: 300;
+}
+.Menu-nav a:hover{
+  color: #F5CC00;
+}
+
+/* Inbox Messages
+=====================================*/
+#inbox-msg{
+  display: flex;
+  color: whitesmoke;
+  font-size: medium;
+  padding-top: 1%;
+  justify-content: center;
+  align-items: center;
+  margin-inline-start: auto;
+  padding-right: 6%;
+  margin-bottom: 10px;
+}
+#inbox-msg span img{
+  width: 30px;
+  height: auto;
+  margin-right: 5px;
+}
+#inbox-msg label{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1px;
+  margin-top: -11px;
+  font-size: smaller;
+  background-color: red;
+  border-radius: 10%;
+  width: 16px;
+  height: 16px;
+
+}
+
 
 
 
@@ -152,9 +202,9 @@ body {
 
 /* Media - Screen
 =====================================*/
-@media only screen and (max-width: 1200px)  {
+@media only screen and (max-width: 1368px)  {
   .l-nav{
-    column-gap: 150px!important;
+    column-gap: 145px!important;
   }
   #btnConnect{
     padding: 10px 24px 10px 24px;
@@ -172,6 +222,7 @@ body {
   }
 }
 
+/* Mobile View */
 @media only screen and (max-width: 500px) {
   .l-nav{
     column-gap: 43px!important;
@@ -180,7 +231,52 @@ body {
     padding: 8px 12px 8px 12px;
     font-size: 9px;
   }
+  .ct-sidebar{
+    z-index: 1;
+    position: absolute;
+    margin-top: 80%;
+    margin-left: -10px;
+  }
+  #inbox-msg{
+    display: none;
+  }
+  .Navbar{
+    margin: 55px 0px 55px 0px;
+  }
+}
+@media only screen and (max-width: 400px) {
+  .l-nav{
+    column-gap: 32px!important;
+  }
+  .logo-brand{
+    width: 100px;
+    height: auto;
+  }
+  #btnConnect{
+    padding: 5px 9px 5px 9px;
+    font-size: 9px;
+  }
+  #connect-icon{
+    width: 10px;
+    height: auto;
+  }
+  .ct-sidebar{
+    z-index: 1;
+    position: absolute;
+    margin-top: 80%;
+    margin-left: -10px;
+  }
+}
 
+/* Menu Navbar */
+@media only screen and (min-width: 768px) {
+  .Menu-nav{
+    display: flex;
+    column-gap: 60px;
+  }
+  .con-btn{
+    display: flex;
+  }
 }
 
 
