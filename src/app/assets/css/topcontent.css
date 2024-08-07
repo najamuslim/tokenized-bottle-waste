@@ -10,7 +10,7 @@
     font-size: 70px;
     font-weight: 200;
 }
-#container text{
+#container div{
     font-size: 55px;
     font-weight: 500;
     color: #F5CC00;
@@ -33,4 +33,67 @@
     background-color: transparent;
     outline: solid 3px #F5CC00;
     color: #F5CC00;
+}
+
+/* SCANNER */
+#CamScan {
+    display: flex;
+    align-items: center;
+    margin-top: 20px;
+    padding: 60px;
+}
+
+/* Media - Screen
+=====================================*/
+@media only screen and (max-width: 768px) {
+    #container h1{
+        font-size: 50px;
+    }
+    #container div{
+        font-size: 30px;
+    }
+  }
+  
+/* Mobile View */
+@media only screen and (max-width: 500px) {
+    #container h1{
+        font-size: 30px;
+    }
+    #container div{
+        font-size: 25px;
+    }
+    #container button{
+        font-size: 16px;
+        margin-top: 8px;
+        padding: 17px;
+        width: 150px;
+    }
+    #CamScan{
+        margin-top: -20px;
+    }
+  }
+
+
+@media only screen and (max-width: 400px) {
+    #container h1{
+        font-size: 24px;
+    }
+    #container div{
+        font-size: 25px;
+    }
+    #container button{
+        font-size: 14px;
+        margin-top: 8px;
+        padding: 14px;
+        width: 120px;
+    }
+}
+
+@media only screen and (min-width: 768px) {
+    #container h1{
+        font-size: 50px;
+    }
+    #container div{
+        font-size: 30px;
+    }
 }

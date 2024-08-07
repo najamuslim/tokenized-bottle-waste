@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@yudiel/react-qr-scanner": "^2.0.4",
     "ethers": "^5.7.2",
     "flowbite-react": "^0.10.1",
     "framer-motion": "^11.3.21",
