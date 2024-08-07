@@ -1,6 +1,8 @@
+
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import "./assets/css/topcontent.css";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -14,8 +16,12 @@ export default function RootLayout({
 }: Readonly<{children: React.ReactNode;}>
 ) {
   return (
-    <html lang="en">\
+    <html lang="en">
+      <head>
+        <link rel="icon" type="image/x-icon" href="/icon.ico" sizes="any"/>
+      </head>
       <body className={inter.className}>{children}</body>
     </html>
   );
 }
+

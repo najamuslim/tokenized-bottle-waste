@@ -1,0 +1,36 @@
+#container{
+    display: flex;
+    color: white;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 120px 0px 100px 0px;
+}
+#container h1{
+    font-size: 70px;
+    font-weight: 200;
+}
+#container text{
+    font-size: 55px;
+    font-weight: 500;
+    color: #F5CC00;
+}
+#container button{
+    display: flex;
+    font-size: 30px;
+    font-weight: 250;
+    margin-top: 70px;
+    background-color: #F5CC00;
+    color: #003566;
+    align-items: center;
+    justify-content: center;
+    padding: 25px;
+    width: 250px;
+    height: auto;
+    border-radius: 90px;
+}
+#container button:hover{
+    background-color: transparent;
+    outline: solid 3px #F5CC00;
+    color: #F5CC00;
+}

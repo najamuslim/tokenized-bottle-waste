@@ -167,7 +167,10 @@ const Top_Bar = () => {
                   data-modal-target="crypto-modal"
                 >
                   <Image src={connect_icon} alt="Connect Wallet icon"></Image>
-                  <span>{defaultAccount ? defaultAccount.slice(0, 12 - 1 , ) + '...' : "Connect Wallet"}</span>
+                  <span>
+                    {defaultAccount ? defaultAccount.slice(0, 6) + '...' + defaultAccount.slice(38)
+                    : "Connect Wallet"}
+                  </span>
                 </button>
               </div>
             </div>
