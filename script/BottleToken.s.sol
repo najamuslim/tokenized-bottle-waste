@@ -2,10 +2,10 @@
 pragma solidity ^0.8.13;
 
 import {Script, console} from "forge-std/Script.sol";
-import {Counter} from "../src/Counter.sol";
+import {BottleToken} from "../src/BottleToken.sol"; // Import the BottleToken contract
 
-contract CounterScript is Script {
-    Counter public counter;
+contract BottleTokenScript is Script {
+    BottleToken public bottleToken; // Declare a BottleToken variable
 
     function setUp() public {}
 
@@ -13,6 +13,7 @@ contract CounterScript is Script {
         vm.startBroadcast();
 
         counter = new Counter();
+        bottleToken = new BottleToken(); // Instantiate the BottleToken contract
 
         vm.stopBroadcast();
     }
