@@ -66,6 +66,16 @@ const Top_Bar = () => {
       provider.send("eth_requestAccounts", []).then(async () => {
         await accountChangeHandler();
       });
+      try{
+      // Feature Auto Change Network
+      await Ethereum.request({
+        method: 'wallet_switchEthereumChain',
+        params: [{ chainId: '4202' }],
+      });
+      } catch (error){
+        console.error(error);
+      }
+      // End
     } else {
       setErrorMessage("Please Install Metamask!");
     }
@@ -131,8 +141,7 @@ const Top_Bar = () => {
             <div className="l-nav">
               {/* Mobile menu button */}
               <button
-                id="btn-toggle"
-                className="md:hidden w-14 h-auto"
+                className="btn-tg"
                 onClick={toggleMobileMenu}
               >
                 <Switch isOn={isOn} onClick={() => setIsOn(!isOn)} />

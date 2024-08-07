@@ -102,13 +102,10 @@ body {
   border-radius: 100%;
 }
 
-#btn-tg{
-  display: flex;
-  width: 55px;
-  height: 50%;
-  border-radius: 100%;
+.btn-tg{
   display: none;
-  outline: none;
+  width: 60px;
+  height: auto;
 }
 
 #btnConnect{
@@ -191,9 +188,7 @@ body {
   border-radius: 10%;
   width: 16px;
   height: 16px;
-
 }
-
 
 
 
@@ -204,7 +199,7 @@ body {
 =====================================*/
 @media only screen and (max-width: 1368px)  {
   .l-nav{
-    column-gap: 145px!important;
+    column-gap: 140px!important;
   }
   #btnConnect{
     padding: 10px 24px 10px 24px;
@@ -214,7 +209,7 @@ body {
 
 @media only screen and (max-width: 768px)  {
   .l-nav{
-    column-gap: 120px!important;
+    column-gap: 100px!important;
   }
   #btnConnect{
     padding: 10px 22px 10px 22px;
@@ -225,11 +220,12 @@ body {
 /* Mobile View */
 @media only screen and (max-width: 500px) {
   .l-nav{
-    column-gap: 43px!important;
+    column-gap: 50px!important;
   }
   #btnConnect{
-    padding: 8px 12px 8px 12px;
-    font-size: 9px;
+    padding: 8px 12px 8px 28px;
+
+    font-size: 12px;
   }
   .ct-sidebar{
     z-index: 1;
@@ -243,6 +239,18 @@ body {
   .Navbar{
     margin: 55px 0px 55px 0px;
   }
+  .btn-tg{
+    display: flex;
+  }
+  #btnConnect {
+    justify-content: flex-start;
+  }
+  #btnConnect img{
+    width: 36px;
+    z-index: 1;
+    position: absolute;
+    margin-left: -29px;
+  }
 }
 @media only screen and (max-width: 400px) {
   .l-nav{
@@ -254,7 +262,7 @@ body {
   }
   #btnConnect{
     padding: 5px 9px 5px 9px;
-    font-size: 9px;
+    font-size: 10px;
   }
   #connect-icon{
     width: 10px;
@@ -265,6 +273,11 @@ body {
     position: absolute;
     margin-top: 80%;
     margin-left: -10px;
+  }
+  #btnConnect img{
+    width: 30px;
+    margin-left: -25px;
+    margin-top: -25px;
   }
 }
 
