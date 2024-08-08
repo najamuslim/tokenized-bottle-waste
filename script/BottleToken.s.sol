@@ -12,7 +12,6 @@ contract BottleTokenScript is Script {
     function run() public {
         vm.startBroadcast();
 
-        counter = new Counter();
         bottleToken = new BottleToken(); // Instantiate the BottleToken contract
 
         vm.stopBroadcast();

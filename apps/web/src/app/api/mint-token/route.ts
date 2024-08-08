@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { ethers } from "ethers";
-import tokenJson from "";
+//import tokenJson from "";
 
 const provider = new ethers.providers.JsonRpcProvider(
   `https://lisk-testnet.gateway.tatum.io`
