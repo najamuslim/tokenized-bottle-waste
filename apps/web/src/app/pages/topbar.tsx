@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import { ethers } from "ethers";
-import { Modal, Sidebar, Alert } from "flowbite-react";
+import { Modal, Sidebar } from "flowbite-react";
 import Image from "next/image";
 
 //Import Assets SVG Icon
@@ -26,6 +26,7 @@ interface SwitchProps {
     [key: string]: any; // for any additional props
 }
 
+
 const Switch: React.FC<SwitchProps> = ({ isOn, ...rest }) => {
   const customClassName = `toggleSwitch ${isOn ? "on" : "off"}`;
   const src = isOn ?  Toggle_On : Toggle_Off;
@@ -43,7 +44,8 @@ const Switch: React.FC<SwitchProps> = ({ isOn, ...rest }) => {
   );
 };
 
-const Ethereum = (window as any).ethereum;
+
+
 
 //FUNCTION TOP BAR 
 const Top_Bar = () => {
@@ -51,13 +53,14 @@ const Top_Bar = () => {
   const [openModal, setOpenModal] = useState(false);
 
   //Properties
-  const [errorMessage, setErrorMessage] = useState("");
+  //const [errorMessage, setErrorMessage] = useState("");
   const [defaultAccount, setDefaultAccount] = useState("");
   const [userBalance, setUserbalance] = useState("");
 
   //Connect Wallet Handler  ( METAMASK WALLET)
   const connectWalletHandler = async () => {
-    if (Ethereum) {
+    if ((window as any).ethereum) {
+      const Ethereum = (window as any).ethereum
       const provider = new ethers.providers.Web3Provider(Ethereum);
       provider.send("eth_requestAccounts", []).then(async () => {
         await accountChangeHandler();
@@ -79,6 +82,7 @@ const Top_Bar = () => {
   };
 
   const accountChangeHandler = async () => {
+    const Ethereum = (window as any).ethereum
     const provider = new ethers.providers.Web3Provider(Ethereum);
     const Account_ = provider.getSigner();
     const address = await Account_.getAddress();
