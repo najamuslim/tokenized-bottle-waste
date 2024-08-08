@@ -2,8 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import { ethers } from "ethers";
-import type { CustomFlowbiteTheme } from "flowbite-react";
-import { Modal, Sidebar } from "flowbite-react";
+import { Modal, Sidebar, Alert } from "flowbite-react";
 import Image from "next/image";
 
 //Import Assets SVG Icon
@@ -20,12 +19,6 @@ import Inbox_icon from "../assets/svg/Inbox.svg";
 
 import { motion } from "framer-motion";
 import { HiChartPie, HiInbox, HiShoppingBag } from "react-icons/hi";
-import { isAddress } from "ethers/src.ts/utils";
-
-//Properties
-const Ethereum = (window as any).ethereum;
-const provider = new ethers.providers.Web3Provider(Ethereum);
-
 
 //Analyze Toggle
 interface SwitchProps {
@@ -50,6 +43,8 @@ const Switch: React.FC<SwitchProps> = ({ isOn, ...rest }) => {
   );
 };
 
+const Ethereum = (window as any).ethereum;
+
 //FUNCTION TOP BAR 
 const Top_Bar = () => {
   //Modal
@@ -63,49 +58,35 @@ const Top_Bar = () => {
   //Connect Wallet Handler  ( METAMASK WALLET)
   const connectWalletHandler = async () => {
     if (Ethereum) {
+      const provider = new ethers.providers.Web3Provider(Ethereum);
       provider.send("eth_requestAccounts", []).then(async () => {
         await accountChangeHandler();
       });
       try{
       // Feature Auto Change Network
-      await Ethereum.request({
+        Ethereum.request({
         method: 'wallet_switchEthereumChain',
-        params: [{ chainId: '4202' }],
+        //Chain ID  Lisk Sepolia Tesnet
+        params: [{ chainId: '0x106a' }],
       });
-      } catch (error){
+      } catch(error){
         console.error(error);
       }
-      // End
-    } else {
-      setErrorMessage("Please Install Metamask!");
+     }
+     else {
+      window.open('https://metamask.io/download.html', '_blank');
     }
   };
 
   const accountChangeHandler = async () => {
-    const Account_ = await provider.getSigner();
+    const provider = new ethers.providers.Web3Provider(Ethereum);
+    const Account_ = provider.getSigner();
     const address = await Account_.getAddress();
     setDefaultAccount(address);
     const balance = await Account_.getBalance("latest");
     setUserbalance(ethers.utils.formatEther(balance));
     //Close Modal
     setOpenModal(false);
-  };
-
-  const getAddress = () => {
-     const account = provider.getSigner();
-    account.getAddress();
-
-  }
-//CUSTOM THEME
-  const customTheme: CustomFlowbiteTheme["navbar"] = {
-    root: {
-      base: "px-2 py-2.5 sm:px-4",
-      rounded: {
-        on: "rounded",
-        off: "",
-      },
-    },
-    //END CUSTOM THEME
   };
 
   const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -119,12 +100,8 @@ const Top_Bar = () => {
     setSwitchOn(!isSwitchOn);
   };
 
-  //
+  //Toggle SideBar Mobile View
   const [isOn, setIsOn] = useState(false);
-
-
-  //Slice Address Wallet Text
- 
                 
     return (
       <>
@@ -167,7 +144,10 @@ const Top_Bar = () => {
                   data-modal-target="crypto-modal"
                 >
                   <Image src={connect_icon} alt="Connect Wallet icon"></Image>
-                  <span>{defaultAccount ? defaultAccount.slice(0, 12 - 1 , ) + '...' : "Connect Wallet"}</span>
+                  <span>
+                    {defaultAccount ? defaultAccount.slice(0, 6) + '...' + defaultAccount.slice(38)
+                    : "Connect Wallet"}
+                  </span>
                 </button>
               </div>
             </div>
