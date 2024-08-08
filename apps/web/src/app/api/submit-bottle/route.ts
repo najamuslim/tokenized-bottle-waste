@@ -3,14 +3,21 @@ import { ethers } from "ethers";
 import tokenJson from "../../../../../../out/BottleToken.sol/XottleToken.json";
 
 const provider = new ethers.providers.JsonRpcProvider(
-  `https://lisk-testnet.gateway.tatum.io`
+  `https://lisk-sepolia.drpc.org/`
 );
 const wallet = new ethers.Wallet(
   process.env.LISK_TESTNET_PRIVATE_KEY as string,
   provider
 );
 
-const tokenAddress = "0xCa4972A5EE99d35e8D3E827Dce8C8B9870BaEBc4";
+console.log(process.env.LISK_TESTNET_PRIVATE_KEY);
+if (!provider || !process.env.LISK_TESTNET_PRIVATE_KEY) {
+  throw new Error(
+    "Environment variables LISK_TESTNET_RPC_URL and LISK_TESTNET_PRIVATE_KEY must be set"
+  );
+}
+
+const tokenAddress = "0xCB7220aFd984F6377104F731676bB67Fb170a9Dd";
 const tokenContract = new ethers.Contract(tokenAddress, tokenJson.abi, wallet);
 
 export const userBottleCounts: Record<string, number> = {};
