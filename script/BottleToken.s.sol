@@ -7,13 +7,14 @@ import {XottleToken} from "../src/XottleToken.sol";
 contract XottleTokenScript is Script {
     XottleToken public xottleToken;
 
-    function setUp() public {}
+    function setUp() public {
+      vm.createSelectFork(vm.rpcUrl("lisk_testnet"));
+    }
 
     function run() public {
-        vm.startBroadcast();
-
-        xottleToken = new XottleToken(msg.sender);
-
-        vm.stopBroadcast();
+      uint256 privateKey = vm.envUint("PRIVATE_KEY_DEPLOY");
+      vm.startBroadcast(privateKey);
+      xottleToken = new XottleToken(vm.envAddress("OWNER_WALLET_ADDRESS"));
+      vm.stopBroadcast();
     }
 }
