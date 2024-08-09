@@ -2,7 +2,8 @@
 
 import { Scanner } from "@yudiel/react-qr-scanner";
 import { ethers } from "ethers";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
+import { useWallet } from "../context/WalletContext";
 
 declare global {
   interface Window {
@@ -10,81 +11,90 @@ declare global {
   }
 }
 
-const Content_top = () => {
+const ContentTop = () => {
   const [scanResult, setScanResult] = useState<string | null>(null);
+  const { defaultAccount } = useWallet();
   const [message, setMessage] = useState("");
   const [userAddress, setUserAddress] = useState<string | null>(null);
-
-  useEffect(() => {
-    const connectWallet = async () => {
-      if (window.ethereum) {
-        try {
-          const accounts = await window.ethereum.request({
-            method: "eth_requestAccounts",
-          });
-          setUserAddress(accounts[0]);
-        } catch (error) {
-          console.error("Error connecting wallet:", error);
-        }
-      } else {
-        alert("Please install MetaMask");
-      }
-    };
-    connectWallet();
-  }, []);
+  const [isButtonClicked, setIsButtonClicked] = useState(false);
 
   const handleScan = async (result: any) => {
     if (result) {
       console.log("result", result);
       setScanResult(result.text);
-      hitSubmitBottle();
+      await hitSubmitBottle();
     }
   };
 
   const hitSubmitBottle = async () => {
-    if (userAddress) {
+    if (defaultAccount) {
       try {
-        const amount = "1";
-        const response = await fetch("/api/submit-bottle", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            userAddress,
-            amount,
-            spenderAddress: userAddress,
-          }),
-        });
+        // Set up ethers.js provider and signer
+        const provider = new ethers.providers.Web3Provider(window.ethereum);
+        const signer = provider.getSigner();
 
-        if (response.ok) {
-          const data = await response.json();
-          console.log(data);
-          console.log("Bottle submmited");
-          setMessage("Bottle submitted successfully!");
-        } else {
-          const errorData = await response.json();
-          //setMessage(Error: ${errorData.error});
-          console.log("error");
-        }
+        // Contract details
+        const tokenAddress = "0xa2B31B994cCE1B26a32392dC6d6e417965e18651";
+        const tokenAbi = [
+          "function mint(address to, uint256 amount) public",
+          "function approve(address spender, uint256 amount) public returns (bool)",
+        ];
+
+        // Create contract instance
+        const tokenContract = new ethers.Contract(
+          tokenAddress,
+          tokenAbi,
+          signer
+        );
+
+        // Perform the mint and approve transactions
+        const amount = ethers.utils.parseUnits("1", 18);
+        const mintTx = await tokenContract.mint(defaultAccount, amount);
+        await mintTx.wait();
+
+        const approveTx = await tokenContract.approve(defaultAccount, amount);
+        await approveTx.wait();
+
+        setMessage("Bottle submitted and allowance set successfully!");
+        console.log("Bottle submitted and allowance set successfully!");
+        addTokenToWallet();
       } catch (error: any) {
-        //setMessage(Error: ${error.message});
+        console.error("Error processing transaction:", error);
+        setMessage(`Error: ${error.message}`);
       }
     } else {
       setMessage("Please connect your wallet.");
     }
   };
 
-  const [isButtonClicked, setIsButtonClicked] = useState(false);
-
-  const handleClick = async () => {
+  const handleClick = () => {
     setIsButtonClicked(true);
-    // const Ethereum = (window as any).ethereum;
-    // const provider = new ethers.providers.Web3Provider(Ethereum);
-    // const Account_ = provider.getSigner();
-    // const address = await Account_.getAddress();
+  };
 
-    // setUserAddress(address);
+  const addTokenToWallet = async () => {
+    if (window.ethereum) {
+      try {
+        const tokenAdded = await window.ethereum.request({
+          method: "wallet_watchAsset",
+          params: {
+            type: "ERC20",
+            options: {
+              address: "0xa2B31B994cCE1B26a32392dC6d6e417965e18651",
+              symbol: "XOTL",
+              decimals: 18,
+            },
+          },
+        });
+
+        if (tokenAdded) {
+          console.log("Token added to wallet!");
+        } else {
+          console.log("Token not added to wallet.");
+        }
+      } catch (error) {
+        console.error("Error adding token to wallet:", error);
+      }
+    }
   };
 
   return (
@@ -93,15 +103,17 @@ const Content_top = () => {
         Exchange Your <b>Bottle</b> Into
       </h1>
       <div className="text-lg mb-4">$XOT</div>
-      {!isButtonClicked ? (
+      {defaultAccount && !isButtonClicked ? (
         <button onClick={handleClick}>Scan Now</button>
       ) : (
-        <div id="CamScan">
-          <Scanner onScan={handleScan} />
-        </div>
+        isButtonClicked && (
+          <div id="CamScan">
+            <Scanner onScan={handleScan} />
+          </div>
+        )
       )}
     </div>
   );
 };
 
-export default Content_top;
+export default ContentTop;

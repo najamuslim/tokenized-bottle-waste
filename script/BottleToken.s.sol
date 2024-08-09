@@ -2,17 +2,17 @@
 pragma solidity ^0.8.13;
 
 import {Script, console} from "forge-std/Script.sol";
-import {BottleToken} from "../src/BottleToken.sol"; // Import the BottleToken contract
+import {BottleToken} from "../src/BottleToken.sol";
 
 contract BottleTokenScript is Script {
-    BottleToken public bottleToken; // Declare a BottleToken variable
+    BottleToken public bottleToken;
 
     function setUp() public {}
 
     function run() public {
         vm.startBroadcast();
 
-        bottleToken = new BottleToken(); // Instantiate the BottleToken contract
+        bottleToken = new BottleToken();
 
         vm.stopBroadcast();
     }
