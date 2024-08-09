@@ -1,24 +1,28 @@
 // SPDX-License-Identifier: UNLICENSED
-pragma solidity ^0.8.13;
+pragma solidity ^0.8.23;
 
-import {Test, console} from "forge-std/Test.sol";
-// import {Counter} from "../src/Counter.sol";
+import {Test} from "lib/forge-std/src/Test.sol";
+import {XottleToken} from "../src/XottleToken.sol";
 
-// contract CounterTest is Test {
-//     Counter public counter;
+contract XottleTokenTest is Test {
+    XottleToken public token;
+    address public owner;
 
-//     function setUp() public {
-//         counter = new Counter();
-//         counter.setNumber(0);
-//     }
+    function setUp() public {
+        owner = address(this);
+        token = new XottleToken(owner);
+    }
 
-//     function test_Increment() public {
-//         counter.increment();
-//         assertEq(counter.number(), 1);
-//     }
+    function testMint() public {
+        uint256 amount = 1000;
+        token.mint(address(this), amount);
+        assertEq(token.balanceOf(address(this)), amount);
+    }
 
-//     function testFuzz_SetNumber(uint256 x) public {
-//         counter.setNumber(x);
-//         assertEq(counter.number(), x);
-//     }
-// }
+    function testApprove() public {
+        uint256 amount = 500;
+        token.mint(address(this), 1000); // Mint tokens first
+        token.approve(address(0xBEEF), amount);
+        assertEq(token.allowance(address(this), address(0xBEEF)), amount);
+    }
+}
