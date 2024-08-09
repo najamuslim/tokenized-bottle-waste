@@ -4,6 +4,8 @@ import React, { useState, useEffect } from "react";
 import { ethers } from "ethers";
 import { Modal, Sidebar } from "flowbite-react";
 import Image from "next/image";
+import Link from "next/link";
+
 import { useWallet } from "../context/WalletContext";
 
 //Import Assets SVG Icon
@@ -84,8 +86,11 @@ const Top_Bar = () => {
             </a>
             {/* Desktop navigation links */}
             <div className="Menu-nav">
-              <a href="#">Dashboard</a>
-              <a href="#">Store</a>
+              <Link href="/">Scan</Link>
+              <Link href="/store">Store</Link>
+              <Link href="/nft">NFT</Link>
+              <Link href="/challenges">Challenges</Link>
+              <Link href="/leaderboard">Leaderboard</Link>
             </div>
             <div className="con-btn">
               <button

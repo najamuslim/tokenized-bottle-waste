@@ -1,6 +1,8 @@
-
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+
+import Top_Bar from "./pages/topbar";
+import Footers from "./pages/footer";
 import "./assets/css/globals.css";
 import "./assets/css/topcontent.css";
 
@@ -13,15 +15,13 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
-}: Readonly<{children: React.ReactNode;}>
-) {
+}: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en">
       <head>
-        <link rel="icon" type="image/x-icon" href="/icon.ico" sizes="any"/>
+        <link rel="icon" type="image/x-icon" href="/icon.ico" sizes="any" />
       </head>
       <body className={inter.className}>{children}</body>
     </html>
   );
 }
-
