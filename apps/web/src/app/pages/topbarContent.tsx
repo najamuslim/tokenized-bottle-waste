@@ -15,7 +15,7 @@ const ContentTop = () => {
       <h1 className="mb-6">
         Exchange Your <b>Bottle</b> Into
       </h1>
-      <div className="text-lg mb-4">$XOTL</div>
+      <div className=" mb-4">$XOTL</div>
       <button
         onClick={() => setOpenModal(true)}
         disabled={!defaultAccount || isButtonClicked}

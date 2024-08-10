@@ -65,8 +65,8 @@ const Top_Bar = () => {
   const [isOn, setIsOn] = useState(false);
 
   //Connect Wallet 
-  const ConnectWallet_closeModal = async () => {
-      await connectWallet();
+  const ConnectWallet_closeModal =  () => {
+      connectWallet();
       setOpenModal(false);
     }
 

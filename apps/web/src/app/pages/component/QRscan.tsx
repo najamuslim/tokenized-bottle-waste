@@ -48,6 +48,8 @@ const QRscan = () => {
     return () => clearInterval(interval);
   }, []);
 
+
+
   // QR Scanner
   const onScanSuccess =  async (result: QrScanner.ScanResult) => {
     
@@ -113,10 +115,48 @@ const QRscan = () => {
         const signer = provider.getSigner();
 
         // Contract details
-        const tokenAddress = "0xa2B31B994cCE1B26a32392dC6d6e417965e18651";
+        const tokenAddress = "0xeF67BA21d39E4E6F9e60bF333dDE64c7e8e66110";
         const tokenAbi = [
-          "function mint(address to, uint256 amount) public",
-          "function approve(address spender, uint256 amount) public returns (bool)",
+            {
+                "inputs": [],
+                "name": "IS_SCRIPT",
+                "outputs": [
+                    {
+                        "internalType": "bool",
+                        "name": "",
+                        "type": "bool"
+                    }
+                ],
+                "stateMutability": "view",
+                "type": "function"
+            },
+            {
+                "inputs": [],
+                "name": "run",
+                "outputs": [],
+                "stateMutability": "nonpayable",
+                "type": "function"
+            },
+            {
+                "inputs": [],
+                "name": "setUp",
+                "outputs": [],
+                "stateMutability": "nonpayable",
+                "type": "function"
+            },
+            {
+                "inputs": [],
+                "name": "xottleToken",
+                "outputs": [
+                    {
+                        "internalType": "contract XottleToken",
+                        "name": "",
+                        "type": "address"
+                    }
+                ],
+                "stateMutability": "view",
+                "type": "function"
+            }
         ];
 
         // Create contract instance
@@ -128,13 +168,13 @@ const QRscan = () => {
 
         setBottleSubmit(true)
         // Perform the mint and approve transactions
-        const amount = ethers.utils.parseUnits("10", 18);
-        const mintTx = await tokenContract.mint(defaultAccount, amount);
-        await mintTx.wait();
+        //const amount = ethers.utils.parseUnits("10", 18);
+        //const mintTx = await tokenContract.mint(defaultAccount, amount);
+        //await mintTx.wait();
 
 
-        const approveTx = await tokenContract.approve(defaultAccount, amount);
-        await approveTx.wait();
+        //const approveTx = await tokenContract.approve(defaultAccount, amount);
+        //await approveTx.wait();
 
         setSuccessSubmit("Bottle submitted and allowance set successfully!");
         
@@ -156,7 +196,7 @@ const QRscan = () => {
           params: {
             type: "ERC20",
             options: {
-              address: "0xa2B31B994cCE1B26a32392dC6d6e417965e18651",
+              address: "0xeF67BA21d39E4E6F9e60bF333dDE64c7e8e66110",
               symbol: "XOTL",
               decimals: 18,
             },
