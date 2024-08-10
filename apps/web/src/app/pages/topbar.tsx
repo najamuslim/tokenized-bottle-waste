@@ -60,8 +60,15 @@ const Top_Bar = () => {
     setSwitchOn(!isSwitchOn);
   };
 
+
   //Toggle SideBar Mobile View
   const [isOn, setIsOn] = useState(false);
+
+  //Connect Wallet 
+  const ConnectWallet_closeModal = async () => {
+      await connectWallet();
+      setOpenModal(false);
+    }
 
   return (
     <>
@@ -156,7 +163,7 @@ const Top_Bar = () => {
                   <span
                     id="metamask_w"
                     className="flex items-center p-3 text-base font-bold text-gray-900 rounded-lg bg-gray-50 hover:bg-gray-100 group hover:shadow dark:bg-gray-600 dark:hover:bg-gray-500 dark:text-white"
-                    onClick={connectWallet}
+                    onClick={ConnectWallet_closeModal}
                   >
                     <Image src={Metamask_icon} alt="Metamask icon" />
                     <span className="flex-1 ms-3 whitespace-nowrap">
