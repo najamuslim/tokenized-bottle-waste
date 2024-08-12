@@ -9,13 +9,13 @@ const nftTargets = [
     id: 1,
     name: "Xottle-Warrior Badge",
     target: 10,
-    image: "/images/earn.png",
+    image: "/warrior-badge.svg",
   },
   {
     id: 2,
     name: "Xottle-Champion Badge",
     target: 100,
-    image: "/images/earn.png",
+    image: "/champion-badge.svg",
   },
 ];
 
