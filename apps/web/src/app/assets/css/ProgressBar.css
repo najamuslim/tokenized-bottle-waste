@@ -1,0 +1,18 @@
+.svg {
+    transform: rotate(-90deg);
+  }
+  
+  .svg-circle-bg {
+    fill: none;
+  }
+  
+  .svg-circle {
+    fill: none;
+    stroke-linecap: round;
+  }
+  
+  .svg-circle-text {
+    font-family: Arial, sans-serif;
+    fill: #333;
+  }
+  

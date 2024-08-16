@@ -1,0 +1,118 @@
+
+
+#h-s-p{
+    display: flex;
+    flex-direction: column;
+}
+    .nft-p{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        padding: 80px;
+        width: 100%;
+        height: 100vh;
+    }
+    .nft-content{
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        width: 100%;
+        height: 100vh;
+        border: 1px solid #F5CC00;
+        border-radius: 0px 35px 0px 35px;
+        flex-direction: column;
+        padding: 50px;
+    }
+    .s-content{
+        display: flex;
+        justify-content: center;
+        width: 80%;
+        height: auto;
+        align-items: center;
+        gap: 24px;
+    }
+    .nft-card{
+        display: flex;
+        flex-direction: row;
+        gap: 35px;
+    }
+    .nft-c-h{
+        display: flex;
+        flex-direction: column;
+        outline: 2px solid #F5CC00;
+        padding: 10px;
+        border-radius: 0px 15px 0px 15px;
+        gap: 10px;
+    }
+    .nft-c-h-i{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: whitesmoke;
+        outline: 1px solid #F5CC00;
+        color: #003566;
+        flex-direction: column;
+        padding: 23px;
+        width: 260px;
+        height: auto;
+        border-radius: 0px 15px 0px 0px;
+    }
+        .nft-card h2{
+            font-size: 17px;
+        }
+        .nft-card p{
+            font-size: 16px;
+        }
+
+    .p-c-nft{
+        display: flex;
+        width: 160px;
+        height: 160px;
+    }
+    .nft-card button{
+        display: flex;
+        background-color:#F5CC00;
+        color: #003566;
+        padding: 6px;
+        justify-content: center;
+        border-radius: 0px 0px 0px 15px;
+    }
+    .nft-card button:hover{
+        background-color:transparent;
+        color: #F5CC00;
+        outline: 2px solid whitesmoke;
+    }
+
+    @media only screen and (max-width: 900px) {
+        .nft-card{
+            flex-direction: column;
+            gap: 20px;
+        }
+    }
+
+    @media only screen and (max-width: 500px) {
+        .s-content{
+            flex-direction: column;
+        }
+        .nft-p{
+            padding: 2px;
+        }
+        .nft-content{
+            padding: 15px;
+        }
+        .nft-c-h-i{
+            width: 210px;
+            height: auto;
+        }
+        .p-c-nft{
+            width: 110px;
+            height: 110px;
+        }
+        .nft-card h2{
+            font-size: 13px;
+        }
+        .nft-card p{
+            font-size: 13px;
+        }
+    }
