@@ -35,7 +35,7 @@ const QRscan = () => {
         const provider = new ethers.providers.Web3Provider(window.ethereum);
         const signer = provider.getSigner();
 
-        const tokenAddress = "0xeF67BA21d39E4E6F9e60bF333dDE64c7e8e66110";
+        const tokenAddress = "0xeD7aB71C0020b7989BeBeACb50B2C4B26076fDAE";
         const tokenAbi: ethers.ContractInterface = [
           {
             inputs: [],
@@ -77,6 +77,24 @@ const QRscan = () => {
             stateMutability: "view",
             type: "function",
           },
+          {
+            inputs: [
+              {
+                internalType: "address",
+                name: "to",
+                type: "address",
+              },
+              {
+                internalType: "uint256",
+                name: "amount",
+                type: "uint256",
+              },
+            ],
+            name: "mint",
+            outputs: [],
+            stateMutability: "nonpayable",
+            type: "function",
+          },
         ];
 
         const tokenContract = new ethers.Contract(
@@ -86,11 +104,13 @@ const QRscan = () => {
         );
         setBottleSubmit(true);
 
-        // const mintTx = await tokenContract.mint(defaultAccount, amount);
-        // await mintTx.wait();
+        const amountPerBottle = ethers.utils.parseUnits("10", 18);
 
-        // const approveTx = await tokenContract.approve(defaultAccount, amount);
-        // await approveTx.wait();
+        const mintTx = await tokenContract.mint(
+          defaultAccount,
+          amountPerBottle
+        );
+        await mintTx.wait();
 
         setSuccessSubmit("Bottle submitted and allowance set success");
         addTokenToWallet();
@@ -167,7 +187,7 @@ const QRscan = () => {
           params: {
             type: "ERC20",
             options: {
-              address: "0xeF67BA21d39E4E6F9e60bF333dDE64c7e8e66110",
+              address: "0xeD7aB71C0020b7989BeBeACb50B2C4B26076fDAE",
               symbol: "XOTL",
               decimals: 18,
             },
