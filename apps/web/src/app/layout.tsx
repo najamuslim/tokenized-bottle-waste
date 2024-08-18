@@ -1,10 +1,13 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 
-import Top_Bar from "./pages/topbar";
-import Footers from "./pages/footer";
 import "./assets/css/globals.css";
 import "./assets/css/topcontent.css";
+import "./assets/css/QR.css";
+import "./assets/css/Store.css";
+import "./assets/css/NFT.css";
+import "./assets/css/Challenges.css";
+import "./assets/css/Leaderboard.css";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -17,7 +20,7 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en">
+    <html>
       <head>
         <link rel="icon" type="image/x-icon" href="/icon.ico" sizes="any" />
       </head>

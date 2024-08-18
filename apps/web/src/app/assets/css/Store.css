@@ -1,0 +1,106 @@
+
+
+    .p-store{
+        display: flex;
+        width: 100%;
+        height: 100vh;
+        padding: 80px;
+        flex-direction: column;
+    }
+    .content-store{
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        width: 100%;
+        height: 100vh;
+        border: 1px solid #F5CC00;
+        border-radius: 0px 35px 0px 35px;
+        flex-direction: column;
+        padding: 30px;
+    }
+    .content-card{
+        display: flex;
+        flex-direction: row;
+        padding: 10px;
+        column-gap: 20px;
+        align-items: center;
+        justify-content: center;
+    }
+    #card{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 20%;
+        height: auto;
+        padding: 10px;
+        outline: 2px solid #F5CC00;
+        border-radius: 0px 15px 0px 15px;
+        gap: 10px;
+    }
+        .p-card{
+            display: flex;
+            width: 100%;
+            height: auto;
+            outline: 2px solid whitesmoke;
+            background-color: whitesmoke;
+            border-radius: 0px 11px 0px 0px;
+        }
+        .b-card{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            align-self: center;
+            color: #003566;
+            background-color: #F5CC00;
+            outline: 2px solid #F5CC00;
+            width: 100%;
+            height: auto;
+            padding: 6px;
+            border-radius: 0px 0px 0px 11px;
+        }
+        .b-card:hover{
+            background-color: transparent;
+            color: #F5CC00;
+            outline: 2px solid whitesmoke;
+        }
+
+
+
+/* Media */
+@media only screen and (max-width: 1368px) {
+
+}
+
+@media only screen and (max-width: 900px) {
+    .p-store{
+        padding: 40px;
+    }
+    .content-store{
+        padding: 10px;
+        height: auto;
+    }
+    #card{
+        width: 45%;
+    }   
+}
+
+@media only screen and (max-width: 520px) {
+    .content-card{
+        flex-direction: column;
+        gap:15px;
+    }
+    .p-store{
+        padding: 2px;
+        height: auto;
+    }
+    .content-store{
+        padding: 5px;
+        height: auto;
+        flex-direction: row;
+    }
+    #card{
+        width: 80%;
+        height: auto;
+    }
+
+}

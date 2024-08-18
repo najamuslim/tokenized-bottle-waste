@@ -16,15 +16,14 @@ const footerStyle: React.CSSProperties = {
   backgroundColor: "#F5CC00",
   color: "#003566",
   padding: "1rem 0",
-  position: "fixed",
+  position: "relative",
   bottom: 0,
   width: "100%",
   textAlign: "center",
-  marginTop: 100,
+  marginTop: "auto",
 };
 
 const containerStyle: React.CSSProperties = {
-  maxWidth: "1200px",
   margin: "0 auto",
   padding: "0 1rem",
 };

@@ -1,61 +1,24 @@
-"use client";
-
-import React, { createContext, useContext, useState } from "react";
+import {
+  createContext,
+  useContext,
+  useEffect,
+  useState,
+  ReactNode,
+} from "react";
 import { ethers } from "ethers";
+import { useRouter } from "next/navigation";
 
-declare global {
-  interface Window{
-    ethereum : any;
-  }
-}
-
-interface WalletContextType {
+interface WalletContextProps {
+  provider: ethers.providers.Web3Provider | null;
+  signer: ethers.Signer | null;
   defaultAccount: string;
-  userBalance: string;
+  balance: string;
+  openMenu: string;
   connectWallet: () => Promise<void>;
+  disconnectWallet: () => void;
 }
 
-const WalletContext = createContext<WalletContextType | undefined>(undefined);
-
-export const WalletProvider: React.FC<{ children: React.ReactNode }> = ({
-  children,
-}) => {
-  const [defaultAccount, setDefaultAccount] = useState("");
-  const [userBalance, setUserBalance] = useState("");
-
-  const connectWallet = async () => {
-    if (window.ethereum) {
-      const ethProvider = new ethers.providers.Web3Provider(window.ethereum);
-      await ethProvider.send("eth_requestAccounts", []);
-      const signer = ethProvider.getSigner();
-      const account = await signer.getAddress();
-      setDefaultAccount(account);
-      //const balance = await provider.getSigner().getBalance();
-      //setUserBalance(ethers.utils.formatEther(balance));
-      try{
-        // Feature Auto Change Network
-        window.ethereum.request({
-         method: 'wallet_switchEthereumChain',
-          //Chain ID  Lisk Sepolia Tesnet
-          params: [{ chainId: '0x106a' }],
-        });
-        } catch(error){
-         console.error(error);
-        }
-    } else {
-      window.open("https://metamask.io/download.html", "_blank");
-    }
-  };
-
-
-  return (
-    <WalletContext.Provider
-      value={{ defaultAccount, userBalance, connectWallet }}
-    >
-      {children}
-    </WalletContext.Provider>
-  );
-};
+const WalletContext = createContext<WalletContextProps | undefined>(undefined);
 
 export const useWallet = () => {
   const context = useContext(WalletContext);
@@ -63,4 +26,116 @@ export const useWallet = () => {
     throw new Error("useWallet must be used within a WalletProvider");
   }
   return context;
+};
+
+export const WalletProvider = ({ children }: { children: ReactNode }) => {
+  const [provider, setProvider] =
+    useState<ethers.providers.Web3Provider | null>(null);
+  const [signer, setSigner] = useState<ethers.Signer | null>(null);
+  const [defaultAccount, setAddress] = useState("");
+  const [balance, setBalance] = useState("");
+  const [openMenu, setOpenMenu] = useState("not-f");
+  const router = useRouter();
+
+  const connectWallet = async () => {
+    const isMobile = () => {
+      const userAgent =
+        typeof window.navigator === "undefined" ? "" : navigator.userAgent;
+      return /android|iphone|ipad|iPod/i.test(userAgent);
+    };
+
+    if (window.ethereum) {
+      const web3Provider = new ethers.providers.Web3Provider(window.ethereum);
+      await web3Provider.send("eth_requestAccounts", []);
+      const signer = web3Provider.getSigner();
+      const defaultAccount = await signer.getAddress();
+      const balance = await signer.getBalance();
+      try {
+        window.ethereum.request({
+          method: "wallet_switchEthereumChain",
+          params: [{ chainId: "0x106a" }],
+        });
+      } catch (error) {
+        console.log("failed switch network");
+      }
+
+      setProvider(web3Provider);
+      setSigner(signer);
+      setAddress(defaultAccount);
+      setBalance(ethers.utils.formatEther(balance));
+    } else {
+      console.error("No Ethereum provider found");
+      const url = isMobile()
+        ? "https://metamask.app.link/download.html"
+        : "https://metamask.io/download.html";
+      window.open(url, "_blank");
+    }
+  };
+
+  const disconnectWallet = () => {
+    setProvider(null);
+    setSigner(null);
+    setAddress("");
+    setBalance("");
+  };
+
+  useEffect(() => {
+    const initConnection = async () => {
+      if (window.ethereum) {
+        const web3Provider = new ethers.providers.Web3Provider(window.ethereum);
+        const accounts = await web3Provider.listAccounts();
+
+        if (accounts.length > 0) {
+          const signer = web3Provider.getSigner();
+          const defaultAccount = await signer.getAddress();
+          const balance = await signer.getBalance();
+
+          setProvider(web3Provider);
+          setSigner(signer);
+          setAddress(defaultAccount);
+          setBalance(ethers.utils.formatEther(balance));
+          setOpenMenu("on-naf");
+        }
+      }
+    };
+
+    initConnection();
+
+    window.ethereum?.on("accountsChanged", async (accounts: string[]) => {
+      if (accounts.length > 0) {
+        const defaultAccount = accounts[0];
+        setAddress(defaultAccount);
+        if (provider) {
+          const balance = await provider.getBalance(defaultAccount);
+          setBalance(ethers.utils.formatEther(balance));
+        }
+      } else {
+        disconnectWallet();
+      }
+    });
+
+    window.ethereum?.on("chainChanged", () => {
+      window.location.reload();
+    });
+
+    return () => {
+      window.ethereum?.removeAllListeners();
+    };
+  }, [provider]);
+
+  return (
+    <WalletContext.Provider
+      value={{
+        provider,
+        signer,
+        defaultAccount,
+        balance,
+        openMenu,
+        connectWallet,
+        disconnectWallet,
+      }}
+    >
+      {children}
+    </WalletContext.Provider>
+  );
 };

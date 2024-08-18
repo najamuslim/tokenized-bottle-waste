@@ -1,72 +1,125 @@
-"use client"
+"use client";
 
-import { useEffect, useRef, useState } from "react";
-import  Image  from "next/image";
-import "../../assets/css/QR.css";
+import { useEffect, useRef, useState, useCallback } from "react";
+import Image from "next/image";
 import QrScanner from "qr-scanner";
 import QrFrame from "../../assets/svg/qr-frame.svg";
-import CircularProgress from './progressBar';
+import CircularProgress from "./progressBar";
 import { ethers } from "ethers";
 import { useWallet } from "../../context/WalletContext";
-
 
 declare global {
   interface Window {
     ethereum: any;
   }
-  
 }
 
 const QRscan = () => {
-  
-  // States
   const scanner = useRef<QrScanner>();
   const videoEl = useRef<HTMLVideoElement>(null);
   const qrBoxEl = useRef<HTMLDivElement>(null);
-  const [qrOn, setQrOn] = useState<boolean>(true);
   const { defaultAccount } = useWallet();
   const [message, setMessage] = useState("");
   const [openModal, setOpenModal] = useState(true);
-
-  // Result
   const [scannedResult, setScannedResult] = useState<string | undefined>("");
-  const [isBottleSubmit, setBottleSubmit] = useState<boolean>();
+  const [isBottleSubmit, setBottleSubmit] = useState<boolean>(false);
   const [tokenAdded, setTokenAdded] = useState("");
   const [isSuccessSubmit, setSuccessSubmit] = useState("");
   const [BottleSubmitSussess, setBottleSubmitSuccess] = useState<boolean>(true);
-  
-  //Progress Bar
   const [progress, setProgress] = useState(0);
+  const [qrOn, setQrOn] = useState<boolean>(true);
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setProgress((prevProgress) =>
-        prevProgress >= 100 ? 100 : prevProgress + 1 
-      );
-    }, 800);
-    
-    return () => clearInterval(interval);
-  }, []);
+  const hitSubmitBottle = useCallback(async () => {
+    if (defaultAccount) {
+      try {
+        const provider = new ethers.providers.Web3Provider(window.ethereum);
+        const signer = provider.getSigner();
 
+        const tokenAddress = "0xeF67BA21d39E4E6F9e60bF333dDE64c7e8e66110";
+        const tokenAbi: ethers.ContractInterface = [
+          {
+            inputs: [],
+            name: "IS_SCRIPT",
+            outputs: [
+              {
+                internalType: "bool",
+                name: "",
+                type: "bool",
+              },
+            ],
+            stateMutability: "view",
+            type: "function",
+          },
+          {
+            inputs: [],
+            name: "run",
+            outputs: [],
+            stateMutability: "nonpayable",
+            type: "function",
+          },
+          {
+            inputs: [],
+            name: "setUp",
+            outputs: [],
+            stateMutability: "nonpayable",
+            type: "function",
+          },
+          {
+            inputs: [],
+            name: "xottleToken",
+            outputs: [
+              {
+                internalType: "contract XottleToken",
+                name: "",
+                type: "address",
+              },
+            ],
+            stateMutability: "view",
+            type: "function",
+          },
+        ];
 
+        const tokenContract = new ethers.Contract(
+          tokenAddress,
+          tokenAbi,
+          signer
+        );
+        setBottleSubmit(true);
 
-  // QR Scanner
-  const onScanSuccess =  async (result: QrScanner.ScanResult) => {
-    
-    setScannedResult(result?.data);
-    if (result){
-      scanner.current?.stop();
-      setQrOn(false);
-      console.log("Success Scanned");
-      setOpenModal(false)
-      await hitSubmitBottle();
+        // const mintTx = await tokenContract.mint(defaultAccount, amount);
+        // await mintTx.wait();
+
+        // const approveTx = await tokenContract.approve(defaultAccount, amount);
+        // await approveTx.wait();
+
+        setSuccessSubmit("Bottle submitted and allowance set success");
+        addTokenToWallet();
+      } catch (error: any) {
+        console.error("Error processing transaction:", error);
+        setMessage(`Error: ${error.message}`);
+      }
+    } else {
+      setMessage("Please connect your wallet.");
     }
+  }, [defaultAccount]);
 
-  };
+  const onScanSuccess = useCallback(
+    async (result: QrScanner.ScanResult) => {
+      setScannedResult(result?.data);
+      if (result) {
+        scanner.current?.stop();
+        setQrOn(false);
+        console.log("Success Scanned");
+        await hitSubmitBottle();
+        setOpenModal(false);
+      }
+    },
+    [hitSubmitBottle]
+  );
 
-  const onScanFail = (err: string | Error) => {
-    console.log(err);
-  };
+  const onScanFail = useCallback((err: string | Error) => {
+    console.error("QR Scan failed: ", err);
+  }, []);
 
   useEffect(() => {
     if (videoEl?.current && !scanner.current) {
@@ -88,105 +141,23 @@ const QRscan = () => {
         });
     }
     return () => {
-        if (!scanner?.current) {
+      if (!scanner?.current) {
         scanner?.current?.stop();
-        }
+      }
     };
-  }, []);
-
+  }, [onScanSuccess, onScanFail]);
 
   useEffect(() => {
-    navigator.permissions.query({ name: 'camera' as PermissionName })
+    console.log("Checking camera permissions...");
+    navigator.permissions
+      .query({ name: "camera" as PermissionName })
       .then((result) => {
-        if (result.state !== 'granted') {
+        if (result.state !== "granted") {
+          console.warn("Camera access denied by user.");
           setQrOn(false);
         }
       });
   }, []);
-  // end QR Scanner
-
-
-  // Handle Scan to Add Token
-  const hitSubmitBottle = async () => {
-    if (defaultAccount) {
-      try {
-        // Set up ethers.js provider and signer
-        const provider = new ethers.providers.Web3Provider(window.ethereum);
-        const signer = provider.getSigner();
-
-        // Contract details
-        const tokenAddress = "0xeF67BA21d39E4E6F9e60bF333dDE64c7e8e66110";
-        const tokenAbi = [
-            {
-                "inputs": [],
-                "name": "IS_SCRIPT",
-                "outputs": [
-                    {
-                        "internalType": "bool",
-                        "name": "",
-                        "type": "bool"
-                    }
-                ],
-                "stateMutability": "view",
-                "type": "function"
-            },
-            {
-                "inputs": [],
-                "name": "run",
-                "outputs": [],
-                "stateMutability": "nonpayable",
-                "type": "function"
-            },
-            {
-                "inputs": [],
-                "name": "setUp",
-                "outputs": [],
-                "stateMutability": "nonpayable",
-                "type": "function"
-            },
-            {
-                "inputs": [],
-                "name": "xottleToken",
-                "outputs": [
-                    {
-                        "internalType": "contract XottleToken",
-                        "name": "",
-                        "type": "address"
-                    }
-                ],
-                "stateMutability": "view",
-                "type": "function"
-            }
-        ];
-
-        // Create contract instance
-        const tokenContract = new ethers.Contract(
-          tokenAddress,
-          tokenAbi,
-          signer
-        );
-
-        setBottleSubmit(true)
-        // Perform the mint and approve transactions
-        //const amount = ethers.utils.parseUnits("10", 18);
-        //const mintTx = await tokenContract.mint(defaultAccount, amount);
-        //await mintTx.wait();
-
-
-        //const approveTx = await tokenContract.approve(defaultAccount, amount);
-        //await approveTx.wait();
-
-        setSuccessSubmit("Bottle submitted and allowance set successfully!");
-        
-        addTokenToWallet();
-      } catch (error: any) {
-        console.error("Error processing transaction:", error);
-        setMessage(`Error: ${error.message}`);
-      }
-    } else {
-      setMessage("Please connect your wallet.");
-    }
-  };
 
   const addTokenToWallet = async () => {
     if (window.ethereum) {
@@ -204,11 +175,10 @@ const QRscan = () => {
         });
 
         if (tokenAdded) {
-              setTokenAdded("XOTL added to Wallet")
+          setTokenAdded("XOTL added to Wallet");
         } else {
           console.log("Token not added to wallet.");
         }
-        
       } catch (error) {
         console.error("Error adding token to wallet:", error);
       }
@@ -216,50 +186,58 @@ const QRscan = () => {
     }
   };
 
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setProgress((prevProgress) =>
+        prevProgress >= 100 ? 100 : prevProgress + 1
+      );
+    }, 800);
+
+    return () => clearInterval(interval);
+  }, []);
 
   return (
     <>
-    <div id="header">Scan Bottle</div>
-    <div id="contentScan">
-      <div className={BottleSubmitSussess ? "waiting" : "success"}></div>
-      {BottleSubmitSussess ? (
-        <div className="qr-reader">
-          {/* QR Scanner */}
-          <video
-            ref={videoEl}
-            className={isBottleSubmit ? "bottle-submit" : "wait-submit"}
-          ></video>
-          {isBottleSubmit ? (
-            <span id="p-bars">
-              <CircularProgress
-                percentage={progress}
-                size={120}
-                color="#F5CC00"
-              />
-              <div className="submit_success">
-                <p>{isSuccessSubmit}</p>
+      <div id="header">Scan Bottle</div>
+      <div id="contentScan">
+        <div className={BottleSubmitSussess ? "waiting" : "success"}></div>
+        {BottleSubmitSussess ? (
+          <div className="qr-reader">
+            {/* QR Scanner */}
+            <video
+              ref={videoEl}
+              className={isBottleSubmit ? "bottle-submit" : "wait-submit"}
+            ></video>
+            {isBottleSubmit ? (
+              <span id="p-bars">
+                <CircularProgress
+                  percentage={progress}
+                  size={120}
+                  color="#F5CC00"
+                />
+                <div className="submit_success">
+                  <p>{isSuccessSubmit}</p>
                 </div>
-            </span>
-          ) : (
-            <div ref={qrBoxEl} className="qr-box">
-              <Image
-                src={QrFrame}
-                alt="QR Frame"
-                width={300}
-                height={300}
-                className="qr-frame"
-              />
-            </div>
-          )}
-        </div>
-
-      ) : (
-        <div className="qr-reader">
-          <div className="notifyAdd">{tokenAdded}</div>
-        </div>
-      )}
-    </div>
-  </>
+              </span>
+            ) : (
+              <div ref={qrBoxEl} className="qr-box">
+                <Image
+                  src={QrFrame}
+                  alt="QR Frame"
+                  width={300}
+                  height={300}
+                  className="qr-frame"
+                />
+              </div>
+            )}
+          </div>
+        ) : (
+          <div className="qr-reader">
+            <div className="notifyAdd">{tokenAdded}</div>
+          </div>
+        )}
+      </div>
+    </>
   );
 };
 

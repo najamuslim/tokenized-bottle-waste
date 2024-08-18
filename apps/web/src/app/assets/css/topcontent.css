@@ -1,99 +1,126 @@
-#container{
-    display: flex;
-    color: white;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    margin: 120px 0px 100px 0px;
+#container {
+  display: flex;
+  color: white;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 120px 0px 100px 0px;
 }
-#container h1{
-    font-size: 70px;
-    font-weight: 200;
+#container h1 {
+  font-size: 80px;
+  font-weight: 200;
 }
-#container div{
-    font-size: 85px;
-    font-weight: 500;
-    color: #F5CC00;
+#container div {
+  font-size: 65px;
+  font-weight: 500;
+  color: #f5cc00;
 }
-#container button{
-    display: flex;
-    font-size: 30px;
-    font-weight: 250;
-    margin-top: 70px;
-    background-color: #F5CC00;
-    color: #003566;
-    align-items: center;
-    justify-content: center;
-    padding: 25px;
-    width: 250px;
-    height: auto;
-    border-radius: 90px;
+#container button {
+  display: flex;
+  font-size: 30px;
+  font-weight: 250;
+  margin-top: 70px;
+  background-color: #f5cc00;
+  color: #003566;
+  align-items: center;
+  justify-content: center;
+  padding: 25px;
+  width: 250px;
+  height: auto;
+  border-radius: 90px;
 }
-#container button:hover{
-    background-color: transparent;
-    outline: solid 3px #F5CC00;
-    color: #F5CC00;
+#container button:hover {
+  background-color: transparent;
+  outline: solid 3px #f5cc00;
+  color: #f5cc00;
 }
 
 /* SCANNER */
 #CamScan {
-    display: flex;
-    align-items: center;
-    margin-top: 20px;
-    padding: 60px;
+  display: flex;
+  align-items: center;
+  margin-top: 20px;
+  padding: 60px;
+}
+
+/* SHOW MENU 
+==============================*/
+#show-menu {
+  display: flex;
+}
+#hide-menu {
+  display: none;
+}
+
+/* Content Bottom 
+==============================*/
+.content-bottom {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 90vh;
 }
 
 /* Media - Screen
 =====================================*/
-@media only screen and (max-width: 768px) {
-    #container h1{
-        font-size: 50px;
-    }
-    #container div{
-        font-size: 30px;
-    }
+@media only screen and (max-width: 1368px) {
+  #container h1 {
+    font-size: 47px;
   }
-  
-/* Mobile View */
-@media only screen and (max-width: 500px) {
-    #container h1{
-        font-size: 30px;
-    }
-    #container div{
-        font-size: 25px;
-    }
-    #container button{
-        font-size: 16px;
-        margin-top: 8px;
-        padding: 17px;
-        width: 150px;
-    }
-    #CamScan{
-        margin-top: -20px;
-    }
+  #container div {
+    font-size: 38px;
   }
-
-
-@media only screen and (max-width: 400px) {
-    #container h1{
-        font-size: 24px;
-    }
-    #container div{
-        font-size: 25px;
-    }
-    #container button{
-        font-size: 14px;
-        margin-top: 8px;
-        padding: 14px;
-        width: 120px;
-    }
 }
 
-@media only screen and (min-width: 768px) {
-    #container h1{
-        font-size: 50px;
-    }
-    #container div{
-        font-size: 65px;
-    }
+@media only screen and (max-width: 900px) {
+  #container h1 {
+    font-size: 47px;
+  }
+  #container div {
+    font-size: 38px;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  #container h1 {
+    font-size: 37px;
+  }
+  #container div {
+    font-size: 35px;
+  }
+}
+
+/* Mobile View */
+@media only screen and (max-width: 500px) {
+  #container h1 {
+    font-size: 30px;
+  }
+  #container div {
+    font-size: 25px;
+  }
+  #container button {
+    font-size: 16px;
+    margin-top: 8px;
+    padding: 17px;
+    width: 150px;
+  }
+  #CamScan {
+    margin-top: -20px;
+  }
+}
+
+@media only screen and (max-width: 400px) {
+  #container h1 {
+    font-size: 24px;
+  }
+  #container div {
+    font-size: 25px;
+  }
+  #container button {
+    font-size: 14px;
+    margin-top: 8px;
+    padding: 14px;
+    width: 120px;
+  }
 }

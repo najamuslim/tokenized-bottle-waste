@@ -1,15 +1,14 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { ethers } from "ethers";
 import { Modal, Sidebar } from "flowbite-react";
 import Image from "next/image";
 import Link from "next/link";
 
 import { useWallet } from "../context/WalletContext";
 
-//Import Assets SVG Icon
 import connect_icon from "../assets/svg/connect_.svg";
+import connected_icon from "../assets/svg/account.svg";
 import Q1_icon from "../assets/svg/Q_1.svg";
 import Logo_brand from "../assets/svg/Xottle_Logo.svg";
 import Metamask_icon from "../assets/svg/metamask.svg";
@@ -21,12 +20,20 @@ import Toggle_Off from "../assets/svg/toggle-off.svg";
 import Inbox_icon from "../assets/svg/Inbox.svg";
 
 import { motion } from "framer-motion";
-import { HiChartPie, HiInbox, HiShoppingBag } from "react-icons/hi";
+import {
+  HiOutlineCamera,
+  HiBell,
+  HiShoppingBag,
+  HiOutlineGift,
+  HiClipboardList,
+  HiBadgeCheck,
+} from "react-icons/hi";
+import ProfileModal from "./component/ProfileModal";
+import { usePathname } from "next/navigation";
 
-//Analyze Toggle
 interface SwitchProps {
   isOn: boolean;
-  [key: string]: any; // for any additional props
+  [key: string]: any;
 }
 
 const Switch: React.FC<SwitchProps> = ({ isOn, ...rest }) => {
@@ -42,12 +49,13 @@ const Switch: React.FC<SwitchProps> = ({ isOn, ...rest }) => {
   );
 };
 
-const Top_Bar = () => {
-  const { defaultAccount, connectWallet } = useWallet();
-  const [openModal, setOpenModal] = useState(false);
+export const Top_Bar = () => {
+  const { provider, signer, defaultAccount, balance, openMenu, connectWallet } =
+    useWallet();
+  const [openWalletModal, setWalletModal] = useState(false);
+  const path = usePathname();
 
-  //const [errorMessage, setErrorMessage] = useState("");
-  const [userBalance, setUserbalance] = useState("");
+  const [isOpen, setIsOpen] = useState(false);
 
   const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isSwitchOn, setSwitchOn] = useState(false);
@@ -60,22 +68,32 @@ const Top_Bar = () => {
     setSwitchOn(!isSwitchOn);
   };
 
-
-  //Toggle SideBar Mobile View
   const [isOn, setIsOn] = useState(false);
 
-  //Connect Wallet 
-  const ConnectWallet_closeModal =  () => {
-      connectWallet();
-      setOpenModal(false);
-    }
+  const ConnectWallet_closeModal = async () => {
+    await connectWallet();
+    setWalletModal(false);
+  };
+
+  useEffect(() => {
+    const OpenConnectWallet = async () => {
+      if (defaultAccount === "" && path != "/") {
+        setWalletModal(true);
+      } else {
+        if (defaultAccount.length > 0) {
+          setWalletModal(false);
+        }
+      }
+    };
+    OpenConnectWallet();
+  });
 
   return (
     <>
       <nav className="Navbar">
         {/* Inbox Messages */}
-        <div id="inbox-msg">
-          <label>3</label>
+        <div className="inbox-msg">
+          <label>4</label>
           <span>
             <Image src={Inbox_icon} alt="Inbox" />
           </span>
@@ -91,59 +109,114 @@ const Top_Bar = () => {
             <a href="/">
               <Image className="logo-brand" src={Logo_brand} alt="logo brand" />
             </a>
+            {/* Active Menu - is Wallet Connected */}
             {/* Desktop navigation links */}
             <div className="Menu-nav">
-              <Link href="/">Scan</Link>
-              <Link href="/store">Store</Link>
-              <Link href="/nft">NFT</Link>
-              <Link href="/challenges">Challenges</Link>
-              <Link href="/leaderboard">Leaderboard</Link>
+              <Link href="/" className={path == "/" ? "activeLink" : ""}>
+                Scan
+              </Link>
+              <Link
+                href="/services/store"
+                className={path == "/services/store" ? "activeLink" : ""}
+              >
+                Store
+              </Link>
+              <Link
+                href="/services/nft"
+                className={path == "/services/nft" ? "activeLink" : ""}
+              >
+                NFT
+              </Link>
+              <Link
+                href="/services/challenges"
+                className={path == "/services/challenges" ? "activeLink" : ""}
+              >
+                Challenges
+              </Link>
+              <Link
+                href="/services/leaderboard"
+                className={path == "/services/leaderboard" ? "activeLink" : ""}
+              >
+                Leaderboard
+              </Link>
             </div>
+            {/* end*/}
+
             <div className="con-btn">
               <button
-                id="btnConnect"
-                onClick={() => setOpenModal(true)}
+                className={defaultAccount ? "btnConnect" : "disConnect"}
+                onClick={() => {
+                  defaultAccount ? setIsOpen(true) : setWalletModal(true);
+                }}
                 type="button"
                 data-modal-target="crypto-modal"
               >
-                <Image src={connect_icon} alt="Connect Wallet icon"></Image>
+                <Image
+                  src={defaultAccount ? connected_icon : connect_icon}
+                  alt="Connect Wallet icon"
+                ></Image>
                 <span>
                   {defaultAccount
                     ? defaultAccount.slice(0, 6) +
                       "..." +
-                      defaultAccount.slice(38)
+                      defaultAccount.slice(-4)
                     : "Connect Wallet"}
                 </span>
               </button>
+              {/* Modal Account */}
+              <ProfileModal
+                isOpen={isOpen}
+                onClose={() => setIsOpen(false)}
+                avatarSrc={connected_icon}
+                balance={balance}
+                account={defaultAccount}
+              ></ProfileModal>
+              {/* End */}
             </div>
           </div>
           {/* Mobile menu */}
-          <div className="ct-sidebar">
+          <div className={defaultAccount ? "ct-sidebar" : "hidden"}>
             <div
               className={`md:hidden ${
-                isMobileMenuOpen ? "block" : "hidden"
+                isMobileMenuOpen && defaultAccount ? "block" : "hidden"
               } bg-transparent`}
             >
               <Sidebar aria-label="Default sidebar example">
                 <Sidebar.Items>
                   <Sidebar.ItemGroup>
-                    <Sidebar.Item href="#" icon={HiChartPie}>
-                      Dashboard
+                    <Sidebar.Item href="/" icon={HiOutlineCamera}>
+                      Scan
                     </Sidebar.Item>
-                    <Sidebar.Item href="#" icon={HiInbox} label="3">
-                      Inbox
-                    </Sidebar.Item>
-                    <Sidebar.Item href="#" icon={HiShoppingBag}>
+                    <Sidebar.Item href="/services/store" icon={HiShoppingBag}>
                       Store
+                    </Sidebar.Item>
+                    <Sidebar.Item href="/services/nft" icon={HiOutlineGift}>
+                      NFT
+                    </Sidebar.Item>
+                    <Sidebar.Item
+                      href="/services/challenges"
+                      icon={HiClipboardList}
+                    >
+                      Challenges
+                    </Sidebar.Item>
+                    <Sidebar.Item
+                      href="/services/leaderboard"
+                      icon={HiBadgeCheck}
+                    >
+                      Leaderboard
+                    </Sidebar.Item>
+                    <Sidebar.Item href="#" icon={HiBell} label="3">
+                      Inbox
                     </Sidebar.Item>
                   </Sidebar.ItemGroup>
                 </Sidebar.Items>
               </Sidebar>
             </div>
           </div>
+          {/* end */}
         </div>
 
-        <Modal show={openModal} onClose={() => setOpenModal(false)}>
+        <Modal show={openWalletModal} onClose={() => setWalletModal(false)}>
           <Modal.Header>
             <div className="flex items-center justify-between p-2 md:p-6">
               <h3 className="text-lg font-semibold text-gray-700 dark:text-white">
