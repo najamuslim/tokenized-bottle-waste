@@ -31,7 +31,7 @@ const storeItems_1 = [
     image: "/images/store/notebook.png",
   },
 ];
-  const storeItems_2 = [
+const storeItems_2 = [
   {
     id: 5,
     name: "Flashdisk",
@@ -90,15 +90,48 @@ const Store = () => {
         (window as any).ethereum
       );
       const signer = provider.getSigner();
-      const contractAddress = "YOUR_CONTRACT_ADDRESS";
-      const abi: ethers.ContractInterface = [
-        // ABI
+      const contractAddress = "0xeD7aB71C0020b7989BeBeACb50B2C4B26076fDAE";
+      const abi = [
+        "function balanceOf(address owner) public view returns (uint256)",
+        "function transferFrom(address sender, address recipient, uint256 amount) public returns (bool)",
+        "function allowance(address owner, address spender) public view returns (uint256)",
+        "function approve(address spender, uint256 amount) public returns (bool)",
       ];
 
-      const contract = new ethers.Contract(contractAddress, abi, signer);
-      const tx = await contract.purchaseMerchandise(
+      const xottleTokenContract = new ethers.Contract(
+        contractAddress,
+        abi,
+        signer
+      );
+
+      const balance = await xottleTokenContract.balanceOf(userAddress);
+      if (balance.lt(ethers.utils.parseUnits(item.price.toString(), 18))) {
+        throw new Error("Insufficient token balance.");
+      }
+
+      // Check the allowance
+      const allowance = await xottleTokenContract.allowance(
         userAddress,
-        ethers.utils.parseUnits(item.price.toString(), 18)
+        userAddress
+      );
+
+      // Ensure the allowance is sufficient
+      if (allowance.lt(ethers.utils.parseUnits(item.price.toString(), 18))) {
+        const approveTx = await xottleTokenContract.approve(
+          userAddress,
+          ethers.utils.parseUnits(item.price.toString(), 18)
+        );
+        await approveTx.wait();
+      }
+
+      const tx = await xottleTokenContract.transferFrom(
+        userAddress, // Sender's address (the user's address)
+        contractAddress, // Recipient's address (the store's address)
+        ethers.utils.parseUnits(item.price.toString(), 18),
+        {
+          gasLimit: 200000,
+          gasPrice: ethers.utils.parseUnits(item.price.toString(), "gwei"),
+        }
       );
       await tx.wait();
 
@@ -111,39 +144,53 @@ const Store = () => {
 
   return (
     <div id="h-s-p">
-    <div className="p-store">
-    <div className="content-store">
-      <div className="content-card">
-        {storeItems_1.map((item) => (
-          <div key={item.id} id="card" >
-            <Image className="p-card"
-              src={item.image}
-              alt={item.name}
-              width={210}
-              height={210}
-            />
-            <div className="b-card">
-                {item.price.toLocaleString()} XOTL
-            </div>
+      <div className="p-store">
+        <div className="content-store">
+          <div className="content-card">
+            {storeItems_1.map((item) => (
+              <div key={item.id} id="card">
+                <Image
+                  className="p-card"
+                  src={item.image}
+                  alt={item.name}
+                  width={210}
+                  height={210}
+                />
+                <div
+                  style={{
+                    cursor: "pointer",
+                  }}
+                  onClick={() => handlePurchase(item)}
+                  className="b-card"
+                >
+                  {item.price.toLocaleString()} XOTL
+                </div>
+              </div>
+            ))}
           </div>
-        ))}
-      </div>
-      <div className="content-card">
-        {storeItems_2.map((item) => (
-          <div key={item.id} id="card" >
-            <Image className="p-card"
-              src={item.image}
-              alt={item.name}
-              width={210}
-              height={210}
-            />
-            <div className="b-card">
-                {item.price.toLocaleString()} XOTL
-            </div>
+          <div className="content-card">
+            {storeItems_2.map((item) => (
+              <div key={item.id} id="card">
+                <Image
+                  className="p-card"
+                  src={item.image}
+                  alt={item.name}
+                  width={210}
+                  height={210}
+                />
+                <div
+                  style={{
+                    cursor: "pointer",
+                  }}
+                  onClick={() => handlePurchase(item)}
+                  className="b-card"
+                >
+                  {item.price.toLocaleString()} XOTL
+                </div>
+              </div>
+            ))}
           </div>
-        ))}
-      </div>
-      </div>
+        </div>
       </div>
       <Footers />
     </div>
