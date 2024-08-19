@@ -8,6 +8,10 @@ import "./assets/css/Store.css";
 import "./assets/css/NFT.css";
 import "./assets/css/Challenges.css";
 import "./assets/css/Leaderboard.css";
+<<<<<<< HEAD
+=======
+import "./assets/css/Footer.css";
+>>>>>>> 49c0225 (update footer view)
 
 const inter = Inter({ subsets: ["latin"] });
 

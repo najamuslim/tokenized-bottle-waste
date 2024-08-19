@@ -12,7 +12,7 @@
     "esModuleInterop": true,
     "module": "ESNext",
     "target": "ES6",
-    "moduleResolution": "Node",
+    "moduleResolution": "Bundler",
     "allowSyntheticDefaultImports": true,
     "resolveJsonModule": true,
     "isolatedModules": true,
