@@ -11,15 +11,15 @@ const nftTargets = [
     id: 1,
     name: "Xottle-Warrior Badge",
     target: 10,
-    image: "https://xottle.asia/images/Warrior-Badge.svg",
+    image: "https://xottle.asia/images/Warrior-Badge.png",
     uri: "https://xottle.asia/nft/warrior-badge.json",
   },
   {
     id: 2,
     name: "Xottle-Champion Badge",
     target: 100,
-    image: "https://xottle.asia/images/Champion-Badge.svg",
-    uri: "https://xottle.asia/nft/champion-badge.json",
+    image: "https://xottle.asia/images/Champion-Badge.png",
+    uri: "https://xottle.asia/nft/warrior-badge.json",
   },
 ];
 
@@ -180,6 +180,7 @@ const NftBadge = () => {
         return;
       }
 
+
       const wasAdded = await (window as any).ethereum.request({
         method: "wallet_watchAsset",
         params: {
@@ -193,6 +194,7 @@ const NftBadge = () => {
           },
         },
       });
+
 
       if (wasAdded) {
         alert("NFT has been added to your wallet!");
@@ -218,8 +220,8 @@ const NftBadge = () => {
                       className="p-c-nft"
                       src={nft.image}
                       alt={nft.name}
-                      width={0}
-                      height={0}
+                      width={160}
+                      height={140}
                     />
                     <h2>{nft.name}</h2>
                     <p>Target: {nft.target} bottles</p>

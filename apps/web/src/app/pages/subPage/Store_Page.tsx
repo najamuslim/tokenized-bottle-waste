@@ -4,6 +4,7 @@ import React, { useState, useEffect } from "react";
 import { ethers } from "ethers";
 import Footers from "../../pages/footer";
 import Image from "next/image";
+import Modal from "../../pages/component/StoreModal";
 
 const storeItems_1 = [
   {
@@ -60,6 +61,8 @@ const storeItems_2 = [
 
 const Store = () => {
   const [userAddress, setUserAddress] = useState<string | null>(null);
+  const [modalMessage, setModalMessage] = useState<string | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
   useEffect(() => {
     const fetchUserAddress = async () => {
@@ -135,10 +138,12 @@ const Store = () => {
       );
       await tx.wait();
 
-      alert("Purchase successful!");
+      setModalMessage("Purchase successful!");
     } catch (error) {
       console.error(error);
-      alert("Purchase failed");
+      setModalMessage("Purchase failed");
+    } finally {
+      setIsModalOpen(true);
     }
   };
 
@@ -157,9 +162,7 @@ const Store = () => {
                   height={210}
                 />
                 <div
-                  style={{
-                    cursor: "pointer",
-                  }}
+                  style={{ cursor: "pointer" }}
                   onClick={() => handlePurchase(item)}
                   className="b-card"
                 >
@@ -179,9 +182,7 @@ const Store = () => {
                   height={210}
                 />
                 <div
-                  style={{
-                    cursor: "pointer",
-                  }}
+                  style={{ cursor: "pointer" }}
                   onClick={() => handlePurchase(item)}
                   className="b-card"
                 >
@@ -192,6 +193,14 @@ const Store = () => {
           </div>
         </div>
       </div>
+
+      {isModalOpen && (
+        <Modal
+          message={modalMessage}
+          onClose={() => setIsModalOpen(false)}
+        />
+      )}
+
       <Footers />
     </div>
   );

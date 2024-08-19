@@ -69,12 +69,7 @@ const Leaderboard = () => {
     <div className="p-l-page">
       <div className="l-b-page">
         <div className="l-content">
-          <div
-            style={{
-              padding: 20,
-            }}
-            className="bg-yellow-400 p-8 rounded-lg shadow-lg"
-          >
+          <div className="l-board">
             <table className="t-content">
               <thead>
                 <tr className="t-h">
@@ -90,9 +85,9 @@ const Leaderboard = () => {
               <tbody>
                 {leaderboardData.map((entry, index) => (
                   <tr key={index} className="t-b">
-                    <td className="flex-row py-4">{index + 1}</td>
-                    <td className="flex-row py-4">{entry.address}</td>
-                    <td className="flex-row py-4">{entry.count}</td>
+                    <td className="">{index + 1}</td>
+                    <td className="l-addr">{entry.address}</td>
+                    <td className="">{entry.count}</td>
                   </tr>
                 ))}
               </tbody>

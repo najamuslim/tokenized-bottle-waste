@@ -42,8 +42,6 @@ contract XottleNFT is ERC721, ERC721URIStorage {
         has100BottlesBadge[msg.sender] = true;
     }
 
-    // The following functions are overrides required by Solidity.
-
     function tokenURI(uint256 tokenId)
         public
         view

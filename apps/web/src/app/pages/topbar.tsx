@@ -75,29 +75,29 @@ export const Top_Bar = () => {
     setWalletModal(false);
   };
 
-  useEffect(() => {
-    const OpenConnectWallet = async () => {
-      if (defaultAccount === "" && path != "/") {
-        setWalletModal(true);
-      } else {
-        if (defaultAccount.length > 0) {
-          setWalletModal(false);
-        }
-      }
-    };
-    OpenConnectWallet();
-  });
+  // useEffect(() => {
+  //   const OpenConnectWallet = async () => {
+  //     if (defaultAccount === "" && path != "/") {
+  //       setWalletModal(true);
+  //     } else {
+  //       if (defaultAccount.length > 0) {
+  //         setWalletModal(false);
+  //       }
+  //     }
+  //   };
+  //   OpenConnectWallet();
+  // });
 
   return (
     <>
       <nav className="Navbar">
         {/* Inbox Messages */}
         <div className="inbox-msg">
-          <label>4</label>
+          {/* <label>4</label>
           <span>
             <Image src={Inbox_icon} alt="Inbox" />
           </span>
-          Inbox
+          Inbox */}
         </div>
         <div className="h-nav">
           <div className="l-nav">
@@ -205,9 +205,9 @@ export const Top_Bar = () => {
                     >
                       Leaderboard
                     </Sidebar.Item>
-                    <Sidebar.Item href="#" icon={HiBell} label="3">
+                    {/* <Sidebar.Item href="#" icon={HiBell} label="3">
                       Inbox
-                    </Sidebar.Item>
+                    </Sidebar.Item> */}
                   </Sidebar.ItemGroup>
                 </Sidebar.Items>
               </Sidebar>
