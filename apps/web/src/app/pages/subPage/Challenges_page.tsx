@@ -59,7 +59,7 @@ const Challenges = () => {
                       tokens by recycling more bottles!
                     </p>
                     <button
-                      className={`px-6 py-3 text-white font-bold rounded-lg transition-colors duration-300 ${
+                      className={`px-6 py-3 text-blue-900 font-bold bg-white w-32 rounded-lg transition-colors duration-300 ${
                         isJoined1 ? "joined cursor-not-allowed" : "bg-blue-900 hover:bg-blue-700"
                       }`}
                       onClick={handleJoinChallenge1}
@@ -78,7 +78,7 @@ const Challenges = () => {
                       win big rewards!
                     </p>
                     <button
-                      className={`px-6 py-3 text-white font-bold rounded-lg transition-colors duration-300 ${
+                      className={`px-6 py-3 text-blue-900 font-bold bg-white rounded-lg transition-colors duration-300 ${
                         isJoined2 ? "joined cursor-not-allowed" : "bg-blue-900 hover:bg-blue-700"
                       }`}
                       onClick={handleJoinChallenge2}

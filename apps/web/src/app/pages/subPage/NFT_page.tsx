@@ -5,6 +5,8 @@ import { ethers } from "ethers";
 import Image from "next/image";
 import { useWallet } from "../../context/WalletContext";
 import Footers from "../../pages/footer";
+import Modal from "../../pages/component/Notify_Modal";
+
 
 const nftTargets = [
   {
@@ -32,6 +34,8 @@ const NftBadge = () => {
   const [addedToWallet, setAddedToWallet] = useState<{
     [key: number]: boolean;
   }>({});
+  const [modalMessage, setModalMessage] = useState<string | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
   useEffect(() => {
     const fetchTotalBottles = async () => {
@@ -150,12 +154,15 @@ const NftBadge = () => {
 
       await tx.wait();
 
-      alert("NFT claimed successfully!");
+      setModalMessage("NFT claimed successfully!");
+
       setOwnedBadges({ ...ownedBadges, [nft.id]: true });
       setAddedToWallet({ ...addedToWallet, [nft.id]: false });
     } catch (error) {
       console.error("Error claiming NFT:", error);
-      alert("NFT claim failed");
+      setModalMessage("NFT claim failed");
+    } finally{
+      setIsModalOpen(true);
     }
   };
 
@@ -197,13 +204,15 @@ const NftBadge = () => {
 
 
       if (wasAdded) {
-        alert("NFT has been added to your wallet!");
+        setModalMessage("NFT has been added to your wallet!");
         setAddedToWallet({ ...addedToWallet, [nft.id]: true });
       } else {
-        console.log("Failed to add NFT to wallet.");
+        setModalMessage("Failed to add NFT to wallet.");
       }
     } catch (error) {
       console.error("Error adding NFT to wallet:", error);
+    } finally{
+      setIsModalOpen(true);
     }
   };
 
@@ -250,6 +259,12 @@ const NftBadge = () => {
           </div>
         </div>
       </div>
+      {isModalOpen && (
+        <Modal
+          message={modalMessage}
+          onClose={() => setIsModalOpen(false)}
+        />
+      )}
       <Footers />
     </div>
   );

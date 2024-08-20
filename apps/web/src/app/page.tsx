@@ -1,6 +1,6 @@
 "use client";
 
-import React, { Component, useEffect } from "react";
+import React from "react";
 import { WalletProvider } from "./context/WalletContext";
 import Top_Bar from "./pages/topbar";
 import Footers from "./pages/footer";

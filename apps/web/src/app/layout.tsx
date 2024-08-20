@@ -3,15 +3,13 @@ import { Inter } from "next/font/google";
 
 import "./assets/css/globals.css";
 import "./assets/css/topcontent.css";
+import "./assets/css/Contents.css";
 import "./assets/css/QR.css";
 import "./assets/css/Store.css";
 import "./assets/css/NFT.css";
 import "./assets/css/Challenges.css";
 import "./assets/css/Leaderboard.css";
-<<<<<<< HEAD
-=======
 import "./assets/css/Footer.css";
->>>>>>> 49c0225 (update footer view)
 
 const inter = Inter({ subsets: ["latin"] });
 

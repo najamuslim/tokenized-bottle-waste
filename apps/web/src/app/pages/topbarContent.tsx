@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import { useWallet } from "../context/WalletContext";
 import QRscan from "./component/QRscan";
 import { Modal } from "flowbite-react";
+import TypeText from "./component/TypeWritingEffect";
 
 const ContentTop = () => {
   const { defaultAccount } = useWallet();
@@ -11,11 +12,12 @@ const ContentTop = () => {
   const [openModal, setOpenModal] = useState(false);
 
   return (
+    <>
     <div id="container">
       <h1 className="mb-6">
-        Exchange Your <b>Bottle</b> Into
+        Exchange Your <TypeText/> Into
       </h1>
-      <div className=" mb-4">$XOTL</div>
+      <div className="token">$XOTL</div>
       <button
         onClick={() => setOpenModal(true)}
         disabled={!defaultAccount || isButtonClicked}
@@ -37,6 +39,7 @@ const ContentTop = () => {
         </Modal>
       </div>
     </div>
+    </>
   );
 };
 

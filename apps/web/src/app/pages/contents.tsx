@@ -1,26 +1,25 @@
 "use client";
 
-import Image from "next/image";
-import { WalletProvider } from "../context/WalletContext";
+import Image from "next/legacy/image";
 
 const Content_Area = () => {
   return (
     <>
       <div className="bg-blue-800 py-16 relative mb-10">
         <hr
-          style={{ width: "80%" }}
+          style={{ width: "90%" }}
           className="absolute top-0 left-1/2 transform -translate-x-1/2 w-1/2 border-t-2 border-yellow-400"
         />
-        <h2
+        <h2 id="txt-3-s"
           style={{ fontSize: 50, padding: 40 }}
-          className="text-center text-white text-5xl md:text-7xl font-bold mb-12"
+          className="text-center text-white text-5xl font-bold mb-12"
         >
           How It Works
         </h2>
         <div className="flex flex-col md:flex-row justify-between items-center space-y-12 md:space-y-0 max-w-6xl mx-auto">
           <div className="flex flex-col items-center text-center text-white flex-1 px-4">
             <Image
-              src="/images/scan.png"
+              src="https://xottle.asia/images/scan.png"
               alt="Scan"
               className="mx-auto mb-4"
               width={230}
@@ -40,7 +39,7 @@ const Content_Area = () => {
           </div>
           <div className="flex flex-col items-center text-center text-white flex-1 px-4">
             <Image
-              src="/images/earn.png"
+              src="https://xottle.asia/images/earn.png"
               alt="Earn"
               className="mx-auto mb-4"
               width={230}
@@ -97,15 +96,14 @@ const Content_Area = () => {
           <br />
           <strong>The more you hold, the more you gain!</strong>
         </p>
-        <div className="flex justify-center px-10">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div className="flex justify-center px-1">
+          <div className="grid grid-cols-1 md:grid-cols-1 gap-1">
             <Image
-              src="/images/domore.png"
+              src="https://xottle.asia/images/domore.png"
               alt="do more"
-              className="object-contain h-auto"
-              objectFit="contain"
-              width={720}
-              height={720}
+              className="f-tr-img"
+              width={800}
+              height={360}
             />
           </div>
         </div>

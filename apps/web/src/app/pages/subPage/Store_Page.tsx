@@ -4,7 +4,7 @@ import React, { useState, useEffect } from "react";
 import { ethers } from "ethers";
 import Footers from "../../pages/footer";
 import Image from "next/image";
-import Modal from "../../pages/component/StoreModal";
+import Modal from "../../pages/component/Notify_Modal";
 
 const storeItems_1 = [
   {

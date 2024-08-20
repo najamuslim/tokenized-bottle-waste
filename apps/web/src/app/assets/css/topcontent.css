@@ -10,10 +10,12 @@
   font-size: 80px;
   font-weight: 200;
 }
-#container div {
+
+.token{
   font-size: 65px;
   font-weight: 500;
   color: #f5cc00;
+  margin-bottom: 20px;
 }
 #container button {
   display: flex;
@@ -34,6 +36,15 @@
   outline: solid 3px #f5cc00;
   color: #f5cc00;
 }
+.typewrite{
+  color: #f5cc00;
+  font-weight: 380;
+}
+@keyframes blink-caret {
+  from, to { border-color: transparent }
+  50% { border-color: #f5cc00; }
+}
+
 
 /* SCANNER */
 #CamScan {
@@ -65,7 +76,7 @@
 /* Media - Screen
 =====================================*/
 @media only screen and (max-width: 1368px) {
-  #container h1 {
+  #container h1{
     font-size: 47px;
   }
   #container div {

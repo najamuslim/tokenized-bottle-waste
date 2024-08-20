@@ -1,0 +1,12 @@
+.f-tr-img{
+    display: flex;
+    width: 100%;
+    height: auto;
+}
+
+
+@media only screen and (max-width: 400px) {
+    #txt-3-s{
+        font-size: 40px!important;
+    }
+}
