@@ -16,14 +16,15 @@ const Content_Area = () => {
         >
           How It Works
         </h2>
-        <div className="flex flex-col md:flex-row justify-between items-center space-y-12 md:space-y-0 max-w-6xl mx-auto">
+        <div className="b-t-contents">
+        <div className="icon-bt-3">
           <div className="flex flex-col items-center text-center text-white flex-1 px-4">
             <Image
               src="https://xottle.asia/images/scan.png"
               alt="Scan"
               className="mx-auto mb-4"
-              width={230}
-              height={230}
+              width={260}
+              height={260}
               objectFit="contain"
             />
           </div>
@@ -32,8 +33,8 @@ const Content_Area = () => {
               src="/images/throw.png"
               alt="Deposit"
               className="mx-auto mb-4"
-              width={230}
-              height={230}
+              width={260}
+              height={260}
               objectFit="contain"
             />
           </div>
@@ -42,15 +43,14 @@ const Content_Area = () => {
               src="https://xottle.asia/images/earn.png"
               alt="Earn"
               className="mx-auto mb-4"
-              width={230}
-              height={230}
+              width={260}
+              height={260}
               objectFit="contain"
             />
           </div>
         </div>
         <div
-          style={{ padding: 20 }}
-          className="flex flex-col md:flex-row justify-between items-center space-y-12 md:space-y-0 max-w-6xl mx-auto"
+          className="p-bt-3"
         >
           <div className="flex flex-col items-center text-center text-white flex-1 px-4">
             <h3 className="text-2xl md:text-3xl font-bold mb-2">Scan</h3>
@@ -71,6 +71,7 @@ const Content_Area = () => {
               products
             </p>
           </div>
+        </div>
         </div>
       </div>
 
@@ -96,16 +97,13 @@ const Content_Area = () => {
           <br />
           <strong>The more you hold, the more you gain!</strong>
         </p>
-        <div className="flex justify-center px-1">
-          <div className="grid grid-cols-1 md:grid-cols-1 gap-1">
+        <div className="f-tr-img">
             <Image
               src="https://xottle.asia/images/domore.png"
               alt="do more"
-              className="f-tr-img"
-              width={800}
-              height={360}
+              width={850}
+              height={370}
             />
-          </div>
         </div>
       </div>
     </>
