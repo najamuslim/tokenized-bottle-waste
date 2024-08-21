@@ -49,9 +49,8 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        background-color: whitesmoke;
         outline: 1px solid #F5CC00;
-        color: #003566;
+        color: whitesmoke;
         flex-direction: column;
         padding: 23px;
         width: 260px;

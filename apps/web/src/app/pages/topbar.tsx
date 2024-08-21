@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState} from "react";
 import { Modal, Sidebar } from "flowbite-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -17,12 +17,10 @@ import ConnectWallet_icon from "../assets/svg/Wallet_Connect.svg";
 import BraveWallet_icon from "../assets/svg/Brave_Wallet.svg";
 import Toggle_On from "../assets/svg/toggle-on.svg";
 import Toggle_Off from "../assets/svg/toggle-off.svg";
-import Inbox_icon from "../assets/svg/Inbox.svg";
 
 import { motion } from "framer-motion";
 import {
   HiOutlineCamera,
-  HiBell,
   HiShoppingBag,
   HiOutlineGift,
   HiClipboardList,

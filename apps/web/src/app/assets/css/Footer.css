@@ -3,11 +3,11 @@
 footer {
     background-color: #F5CC00;
     color: #003566;
-    padding: 1rem 0;
+    padding: 1rem;
     position: relative;
     bottom: 0;
     width: 100%;
-    margin-top: auto;
+    margin-top: 0;
   }
   
   .f-content {
@@ -15,18 +15,44 @@ footer {
     flex-direction: row;
     align-items: center;
     margin: 0 auto;
-    width: 100%;
+    width: 90%;
+    height: auto;
+    justify-content: center;
+    align-content: center;
+    border-top: 1px solid #003566;
+    gap: 10rem;
+    padding: 20px;
+  }
+  .not-f-c{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin: 0 auto;
+    width: 90%;
     height: auto;
     justify-content: center;
     align-content: center;
     gap: 10rem;
+    padding: 20px;
   }
   
   .leftColumn {
     display: flex;
+    flex-direction: column;
     justify-content: center;
-    gap: 1rem;
+    gap: 10px;
     align-items: center;
+  }
+  .title{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: -45px;
+  }
+  .btn-app-st{
+    display: flex;
+    align-items: center;
+    justify-items: center;
   }
   
   .text {

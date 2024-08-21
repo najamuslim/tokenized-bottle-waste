@@ -3,12 +3,18 @@ import { FaInstagram, FaYoutube, FaSquareXTwitter } from "react-icons/fa6";
 import googlePlayImage from "../../../public/images/google-play.png";
 import appStoreImage from "../../../public/images/AppStore.png"; 
 import Image from "next/image";
+import { usePathname } from "next/navigation";
 
 const Footers: React.FC = () => {
+
+  const path = usePathname();
+
   return (
     <footer>
-      <div className="f-content">
+      <div className={path === "/"? "f-content": "not-f-c"}>
         <div className="leftColumn">
+        <div className="title">Coming Soon</div>
+        <div className="btn-app-st">
           <a 
             href="#"
             target="_blank" 
@@ -25,6 +31,7 @@ const Footers: React.FC = () => {
           >
             <Image src={appStoreImage} alt="App Store" className="buttonImage" />
           </a>
+          </div>
         </div>
         <p className="text">
           © {new Date().getFullYear()} Xottle. All rights reserved.

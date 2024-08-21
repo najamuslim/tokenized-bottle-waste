@@ -3,12 +3,12 @@
 import Image from "next/legacy/image";
 
 const Content_Area = () => {
+
   return (
     <>
-      <div className="bg-blue-800 py-16 relative mb-10">
+      <div className="h-t-contents bg-blue-800 py-16 relative mb-10">
         <hr
-          style={{ width: "90%" }}
-          className="absolute top-0 left-1/2 transform -translate-x-1/2 w-1/2 border-t-2 border-yellow-400"
+          className="line-top-br"
         />
         <h2 id="txt-3-s"
           style={{ fontSize: 50, padding: 40 }}
@@ -75,7 +75,7 @@ const Content_Area = () => {
       </div>
 
       <div
-        className="bg-yellow-400 py-16 mt-10 mx-10"
+        className="c-bottom py-16 mt-10 mx-10"
         style={{ padding: "40px" }}
       >
         <h2

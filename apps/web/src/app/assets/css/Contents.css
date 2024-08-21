@@ -1,9 +1,26 @@
+
+.h-t-contents{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.line-top-br{
+    display: flex;
+    border-top: 1px solid #f5CC00;
+    width: 90%;
+    height: auto;
+}
 .f-tr-img{
     display: flex;
     width: 100%;
     height: auto;
 }
-
+.c-bottom{
+    display: grid;
+    background-color: #f5CC00;
+    margin-bottom: 0;
+}
 
 @media only screen and (max-width: 400px) {
     #txt-3-s{
